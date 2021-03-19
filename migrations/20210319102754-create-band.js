@@ -14,7 +14,7 @@ module.exports = {
       address: {
         type: Sequelize.STRING
       },
-      deskripsi: {
+      description: {
         type: Sequelize.TEXT
       },
       rate: {
