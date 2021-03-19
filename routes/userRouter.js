@@ -1,8 +1,9 @@
 const router = require("express").Router();
+const BandController = require("../controllers/bandController");
 
-router.get("/");
-router.get("/:id");
-router.post("/:id");
-router.put("/:id");
+router.get("/", BandController.findAll);
+router.get("/:id", BandController.find);
+router.post("/:id", BandController.createProfile);
+router.put("/:id", BandController.updateProfile);
 
 module.exports = router;
