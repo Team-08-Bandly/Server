@@ -3,6 +3,7 @@ const app = require("../app");
 const { sequelize, User } = require("../models");
 const { queryInterface } = sequelize;
 
+
 let dataRegister = {
   name: "test account",
   email: "testClient@mail.com",
@@ -20,6 +21,7 @@ let register = {
   email: "ridho123@mail.com",
   password: "secret",
   accountType: "client",
+
 };
 
 describe("User Register", () => {
@@ -314,3 +316,4 @@ describe("User routes", () => {
     });
   });
 });
+
