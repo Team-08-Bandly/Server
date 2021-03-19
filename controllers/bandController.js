@@ -27,15 +27,16 @@ module.exports = class BandController {
 
   static createProfile(req, res) {
     const { id } = req.params
-    const { location, description, genre, rate } = req.body
+    const { name, location, description, genre, rate } = req.body
     let payload = {}
-    Band.create({ location, description, rate, UserId: id })
+    Band.create({ name, location, description, rate, UserId: id })
       .then(band => {
-        console.log(band)
+        console.log(band, "ini band create")
         payload = band
         const bandGenres = genre.map(e => {
-          return { BandId: band.id,GenreId: e.id }
+          return { BandId: band.id,GenreId: e }
         })
+        console.log(bandGenres, "ini bandGenres hasil map");
         return BandGenre.bulkCreate(bandGenres)
       })
       .then(result => {

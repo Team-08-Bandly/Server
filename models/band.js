@@ -14,18 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Band.init({
-    UserId: {
-      type: DataTypes.INTEGER
-    },
-    location: {
-      type: DataTypes.STRING
-    },
-    description: {
-      type: DataTypes.TEXT
-    },
-    rate: {
-      type: DataTypes.INTEGER
-    }
+    name: DataTypes.STRING,
+    UserId: DataTypes.INTEGER,
+    location: DataTypes.STRING,
+    description: DataTypes.STRING,
+    rate: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Band',
