@@ -21,7 +21,7 @@ let bandProfile = {
   name: "Dream Theater",
   description: "Prog Metal band located somewhere in America",
   location: "Jakarta",
-  genre: "Metal",
+  genre: ["Metal"],
   rate: 1000000,
 };
 
@@ -63,7 +63,9 @@ describe("User routes", () => {
       .then(() => done())
       .catch((err) => done(err));
   });
+  //Create
   describe("POST /users", () => {
+    //Success create
     describe("Success process", () => {
       test("should create band profile with status code 201", (done) => {
         request(app)
@@ -91,6 +93,7 @@ describe("User routes", () => {
           });
       });
     });
+    //Error create
     describe("Error process", () => {
       test("should send an error with status 401 because of invalid access_token", (done) => {
         request(app)
@@ -140,7 +143,10 @@ describe("User routes", () => {
       });
     });
   });
+
+  //Read User
   describe("GET /users", () => {
+    //Success read
     describe("Success process", () => {
       test("should send all registered band data with status 200", (done) => {
         request(app)
@@ -169,6 +175,7 @@ describe("User routes", () => {
             done();
           });
       });
+      //Error Read
       describe("Error process", () => {
         test("should send error with status 404 because of invalid UserId", (done) => {
           request(app)
@@ -185,6 +192,7 @@ describe("User routes", () => {
     });
   });
 
+  //Update Users
   describe("UPDATE /users", () => {
     let updatedProfile = {
       name: "Kangen Band",
@@ -194,6 +202,7 @@ describe("User routes", () => {
       rate: 1500000,
     };
 
+    //Success Update
     describe("Success Process", () => {
       test("should send Update message with status 200", (done) => {
         request(app)
@@ -211,6 +220,7 @@ describe("User routes", () => {
           });
       });
     });
+    //Error Update
     describe("Error Process", () => {
       test("should send error message with status 401 because of invalid accesss_token", (done) => {
         request(app)
