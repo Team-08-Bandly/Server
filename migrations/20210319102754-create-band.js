@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       rate: {
-        type: Sequelize.DECIMAL(10, 2)
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

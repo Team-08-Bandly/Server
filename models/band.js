@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT
     },
     rate: {
-      type: DataTypes.DECIMAL(10, 2)
+      type: DataTypes.INTEGER
     }
   }, {
     sequelize,
