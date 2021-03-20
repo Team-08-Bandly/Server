@@ -1,20 +1,24 @@
-const { User } = require('../models/') 
+const { User } = require("../models/");
 
-const authorizeBand = function (req, res, next ) {
+const authorizeBand = function (req, res, next) {
   User.findByPk(req.decoded.id)
-    .then(user => {
+    .then((user) => {
       if (!user) {
-        throw { name: "customError", status: 404, message: "data not found" }
+        throw { name: "customError", status: 404, message: "data not found" };
       } else {
-        if (req.decoded.accountType === 'band') next()
+        if (req.decoded.accountType === "band") next();
         else {
-          throw { name: "customError", status: 401, message: "not authorized"}
+          throw {
+            name: "customError",
+            status: 401,
+            message: "Unauthorized account type",
+          };
         }
       }
     })
-    .catch(err => {
-      next(err)
-    })
-}
+    .catch((err) => {
+      next(err);
+    });
+};
 
-module.exports = { authorizeBand }
+module.exports = { authorizeBand };
