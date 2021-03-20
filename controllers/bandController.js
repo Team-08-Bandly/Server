@@ -31,17 +31,17 @@ module.exports = class BandController {
     let payload = {};
     Band.create({ name, location, description, rate, UserId: id })
       .then((band) => {
-        console.log(band, "ini band create");
+        // console.log(band.dataValues, "ini band create");
         payload = band.dataValues;
         const bandGenres = genre.map((e) => {
           return { BandId: id, GenreId: e };
         });
-        console.log(bandGenres, "ini bandGenres hasil map");
+        // console.log(bandGenres, "ini bandGenres hasil map");
         return BandGenre.bulkCreate(bandGenres);
       })
       .then((result) => {
         const newResult = { ...payload, genre: result };
-        res.status(201).json(newResult);
+        res.status(201).json({ band: newResult });
       })
       .catch((err) => {
         next(err);
