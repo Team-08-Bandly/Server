@@ -11,15 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      BandGenre.belongsTo(models.Band)
+      BandGenre.belongsTo(models.Genre)
     }
   };
   BandGenre.init({
-    BandId: {
-      type: DataTypes.INTEGER
-    },
-    GenreId: {
-      type: DataTypes.INTEGER
-    }
+    BandId: DataTypes.INTEGER,
+    GenreId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'BandGenre',

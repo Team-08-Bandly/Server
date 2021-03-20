@@ -3,7 +3,7 @@ const { comparePassword } = require("../helpers/bcrypt");
 const { generateToken } = require("../helpers/jwt");
 
 module.exports = class AuthController {
-  static register(req, res) {
+  static register(req, res, next) {
     const { name, email, password, accountType } = req.body;
     User.create({ name, email, password, accountType })
       .then((newUser) => {
@@ -15,11 +15,11 @@ module.exports = class AuthController {
         });
       })
       .catch((err) => {
-        res.status(500).json(err);
+        next(err)
       });
   }
 
-  static login(req, res) {
+  static login(req, res, next) {
     const { email, password } = req.body;
     User.findOne({
       where: { email },
@@ -35,11 +35,11 @@ module.exports = class AuthController {
           const access_token = generateToken(payload);
           res.status(200).json({ access_token });
         } else {
-          res.status(400).json({ message: "Invalid Email/Password" });
+          throw { name: "customError", status: 401, message: "Invalid Email/Password" }
         }
       })
       .catch((err) => {
-        res.status(500).json(err);
+        next(err)
       });
   }
 };

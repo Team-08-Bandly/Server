@@ -84,7 +84,7 @@ module.exports = (sequelize, DataTypes) => {
             msg: "Account type is a required field",
           },
           isIn: {
-            args: ["band", "client"],
+            args: [["band", "client"]],
             msg: "Not have that account type",
           },
         },

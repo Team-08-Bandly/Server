@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate (models) {
       // define association here
+      Band.belongsToMany(models.Genre, { through: models.BandGenre })
     }
   }
   Band.init(
