@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
 
 function generateToken(payload) {
-  return jwt.sign(payload, "BandlySecret");
+  return jwt.sign(payload, process.env.SECRET_JWT);
 }
 
 function verifyToken(token) {
-  return jwt.verify(token, "BandlySecret");
+  return jwt.verify(token, process.env.SECRET_JWT);
 }
 
 module.exports = { generateToken, verifyToken };
