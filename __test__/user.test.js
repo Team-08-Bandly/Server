@@ -3,7 +3,6 @@ const app = require("../app");
 const { sequelize, User } = require("../models");
 const { queryInterface } = sequelize;
 
-
 let dataRegister = {
   name: "test account",
   email: "testClient@mail.com",
@@ -21,7 +20,6 @@ let register = {
   email: "ridho123@mail.com",
   password: "secret",
   accountType: "client",
-
 };
 
 describe("User Register", () => {
@@ -29,7 +27,9 @@ describe("User Register", () => {
     afterAll((done) => {
       queryInterface
         .bulkDelete("Users", {})
-        .then((_) => done())
+        .then((_) => {
+          done();
+        })
         .catch((err) => done(err));
     });
     //? testing success
@@ -41,10 +41,10 @@ describe("User Register", () => {
           .send(register)
           .end((err, res) => {
             expect(err).toBe(null);
-            expext(res.body).toHaveProperty("id", expect.any(Number));
+            expect(res.body).toHaveProperty("id", expect.any(Number));
             expect(res.body).toHaveProperty("email", register.email);
-            expext(res.body).toHaveProperty("name", register.name);
-            expext(res.body).toHaveProperty(
+            expect(res.body).toHaveProperty("name", register.name);
+            expect(res.body).toHaveProperty(
               "accountType",
               register.accountType
             );
@@ -95,7 +95,7 @@ describe("User Register", () => {
           .end((err, res) => {
             expect(err).toBe(null);
             expect(res.body).toHaveProperty("message", expect.any(Array));
-            expect(res.body.message).toContain("Email is already exist");
+            expect(res.body.message).toContain("Email is already exists");
             expect(res.body.message.length).toBeGreaterThan(0);
             expect(res.status).toBe(400);
             done();
@@ -260,7 +260,10 @@ describe("User routes", () => {
     afterAll((done) => {
       queryInterface
         .bulkDelete("Users", {})
-        .then((_) => done())
+        .then((_) => {
+          sequelize.close();
+          done();
+        })
         .catch((err) => done(err));
     });
     describe("Success process", () => {
@@ -271,13 +274,7 @@ describe("User routes", () => {
           .end((err, res) => {
             expect(err).toBe(null);
             expect(res.status).toBe(200);
-            expect(res.body).toHaveProperty("email", dataLogin.email);
-            expect(res.body).toHavePropery("id", expect.any(Number));
             expect(res.body).toHaveProperty("access_token", expect.any(String));
-            expect(res.body).toHaveProperty(
-              "accountType",
-              dataRegister.accountType
-            );
             done();
           });
       });
@@ -316,4 +313,3 @@ describe("User routes", () => {
     });
   });
 });
-

@@ -15,7 +15,7 @@ module.exports = class AuthController {
         });
       })
       .catch((err) => {
-        next(err)
+        next(err);
       });
   }
 
@@ -35,11 +35,27 @@ module.exports = class AuthController {
           const access_token = generateToken(payload);
           res.status(200).json({ access_token });
         } else {
-          throw { name: "customError", status: 401, message: "Invalid Email/Password" }
+          throw {
+            name: "customError",
+            status: 401,
+            message: "Invalid Email/Password",
+          };
         }
       })
       .catch((err) => {
-        next(err)
+        next(err);
+      });
+  }
+
+  static getUserById(req, res, next) {
+    User.findByPk(req.decoded.id)
+      .then((data) => {
+        const { id, email, accountType } = data;
+        const result = { id, email, accountType };
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        next(err);
       });
   }
 };
