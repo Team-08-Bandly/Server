@@ -19,16 +19,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM,
         values: ["audio", "video"],
         validate: {
-          notNull: {
-            args: true,
-            msg: "Format cannot be empty",
-          },
           notEmpty: {
             args: true,
             msg: "Format type is a required field",
           },
           isIn: {
-            args: [["band", "client"]],
+            args: [["audio", "video"]],
             msg: "Wrong type",
           },
         },
