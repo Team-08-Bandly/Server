@@ -18,20 +18,76 @@ module.exports = (sequelize, DataTypes) => {
     {
       name: {
         type: DataTypes.STRING,
-        validate: {},
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "Name cannot be null",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Name is a required field",
+          },
+        },
       },
       email: {
         type: DataTypes.STRING,
-        validate: {},
+        allowNull: false,
+        unique: {
+          args: true,
+          msg: "Email is already exists",
+        },
+        validate: {
+          notNull: {
+            args: true,
+            msg: "Email cannot be null",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Email is a required field",
+          },
+          isEmail: {
+            args: true,
+            msg: "Invalid email format",
+          },
+        },
       },
       password: {
         type: DataTypes.STRING,
-        validate: {},
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "Password cannot be null",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Password is a required field",
+          },
+          len: {
+            args: [6],
+            msg: "Password min 6 character",
+          },
+        },
       },
-      account_type: {
+      accountType: {
         type: DataTypes.ENUM,
+        allowNull: false,
         values: ["band", "client"],
-        validate: {},
+        validate: {
+          notNull: {
+            args: true,
+            msg: "Account cannot be empty",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Account type is a required field",
+          },
+          isIn: {
+            args: ["band", "client"],
+            msg: "Not have that account type",
+          },
+        },
       },
     },
     {
