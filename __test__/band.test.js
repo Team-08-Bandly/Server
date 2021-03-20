@@ -41,14 +41,14 @@ describe("User routes", () => {
         bandId = band.id;
         bandToken = generateToken(
           { id: band.id, email: band.email },
-          "bandlySecret"
+          "BandlySecret"
         );
         return User.create(dataClient);
       })
       .then((client) => {
         clientToken = generateToken(
           { id: client.id, email: client.email },
-          "bandlySecret"
+          "BandlySecret"
         );
         done();
       })
