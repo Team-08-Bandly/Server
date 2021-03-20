@@ -22,7 +22,7 @@ let bandProfile = {
   name: "Dream Theater",
   description: "Prog Metal band located somewhere in America",
   location: "Jakarta",
-  genre: [1,2],
+  genre: [1, 2],
   rate: 1000000,
 };
 
@@ -33,13 +33,14 @@ let emptyInput = {
   genre: [],
   rate: 0,
 };
-let bandToken, clientToken, bandId;
+let bandToken;
+let clientToken;
+let bandId;
 
 describe("User routes", () => {
   beforeAll((done) => {
     User.create(dataBand)
       .then((band) => {
-        bandId = band.id;
         bandToken = generateToken(
           { id: band.id, email: band.email, accountType: band.accountType },
           "BandlySecret"
@@ -48,7 +49,11 @@ describe("User routes", () => {
       })
       .then((client) => {
         clientToken = generateToken(
-          { id: client.id, email: client.email, accountType: client.accountType },
+          {
+            id: client.id,
+            email: client.email,
+            accountType: client.accountType,
+          },
           "BandlySecret"
         );
         done();
@@ -61,7 +66,10 @@ describe("User routes", () => {
     queryInterface
       .bulkDelete("Users", {})
       .then(() => queryInterface.bulkDelete("Bands", {}))
-      .then(() => done())
+      .then(() => {
+        sequelize.stop();
+        done();
+      })
       .catch((err) => done(err));
   });
   //Create
@@ -74,8 +82,9 @@ describe("User routes", () => {
           .send(bandProfile)
           .set("access_token", bandToken)
           .end((err, res) => {
-            console.log(res.body, '<<<<<< ini res body band');
             expect(err).toBe(null);
+            bandId = res.body.band.id;
+            // console.log(res.body.band.id, "---------- yang mau di ambil");
             expect(res.body).toHaveProperty("band", res.body.band);
             expect(res.body.band).toHaveProperty("id", expect.any(Number));
             expect(res.body.band).toHaveProperty("UserId", expect.any(Number));
@@ -88,7 +97,7 @@ describe("User routes", () => {
               "location",
               bandProfile.location
             );
-            expect(res.body.band).toHaveProperty("genre", bandProfile.genre);
+            expect(res.body.band).toHaveProperty("genre", expect.any(Array));
             expect(res.body.band).toHaveProperty("rate", bandProfile.rate);
             expect(res.status).toBe(201);
             done();
@@ -104,7 +113,7 @@ describe("User routes", () => {
           .set("access_token", clientToken)
           .end((err, res) => {
             expect(err).toBe(null);
-            expect(res.body).toHaveProperty("message", expect.any(Array));
+            expect(res.body).toHaveProperty("message");
             expect(res.body.message).toContain("Unauthorized account type");
             expect(res.body.message.length).toBeGreaterThan(0);
             expect(res.status).toBe(401);
@@ -117,8 +126,8 @@ describe("User routes", () => {
           .send(bandProfile)
           .end((err, res) => {
             expect(err).toBe(null);
-            expect(res.body).toHaveProperty("message", expect.any(Array));
-            expect(res.body.message).toContain("No access_token");
+            expect(res.body).toHaveProperty("message");
+            expect(res.body.message).toContain("Invalid token");
             expect(res.body.message.length).toBeGreaterThan(0);
             expect(res.status).toBe(401);
             done();
@@ -134,11 +143,11 @@ describe("User routes", () => {
             expect(res.body).toHaveProperty("message", expect.any(Array));
             expect(res.body.message).toContain("Band name cannot be empty");
             expect(res.body.message).toContain("Location cannot be empty");
-            expect(res.body.message).toContain("Genre cannot be empty");
             expect(res.body.message).toContain(
               "Rate cannot be less than 100000"
             );
             expect(res.body.message.length).toBeGreaterThan(0);
+            // expect(res.body.message).toContain("Genre cannot be empty");
             expect(res.status).toBe(400);
             done();
           });
@@ -164,28 +173,30 @@ describe("User routes", () => {
           .get("/bands/" + bandId)
           .end((err, res) => {
             expect(err).toBe(null);
-            expect(res.body).toHaveProperty("UserId", bandId);
+            expect(res.body).toHaveProperty("id", bandId);
             expect(res.body).toHaveProperty("name", bandProfile.name);
             expect(res.body).toHaveProperty(
               "description",
               bandProfile.description
             );
             expect(res.body).toHaveProperty("location", bandProfile.location);
-            expect(res.body).toHaveProperty("genre", expect.any(Array));
-            expect(res.body).toHaveProperty("portofolio", expect.any(Array));
+            expect(res.body).toHaveProperty("Genres", expect.any(Array));
+            // expect(res.body).toHaveProperty("portofolio", expect.any(Array));
             expect(res.status).toBe(200);
             done();
           });
       });
-      //Error Read
+      // //Error Read
       describe("Error process", () => {
-        test("should send error with status 404 because of invalid UserId", (done) => {
+        test("should send error with status 404 because of invalid BandId", (done) => {
           request(app)
-            .get(`bands/${bandId + 2}`)
+            .get(`/bands/123456789`)
             .end((err, res) => {
               expect(err).toBe(null);
-              expect(res.body).toHaveProperty("message", expect.any(Array));
-              expect(res.body.message).toContain("404: Error not Found");
+              expect(typeof res.body).toEqual("object");
+              expect(res.body).toHaveProperty("message");
+              // expect(res.body).toHaveProperty("message", expect.any(Array));
+              expect(res.body.message).toContain("Error not Found");
               expect(res.status).toBe(404);
               done();
             });
@@ -200,7 +211,7 @@ describe("User routes", () => {
       name: "Kangen Band",
       description: "Metal band located in Jakarta",
       location: "Jakarta",
-      genre: "Metal",
+      genre: [2],
       rate: 1500000,
     };
 
@@ -208,11 +219,12 @@ describe("User routes", () => {
     describe("Success Process", () => {
       test("should send Update message with status 200", (done) => {
         request(app)
-          .put(`/bands/${bandId}`)
+          .put(`/bands/`)
           .send(updatedProfile)
           .set("access_token", bandToken)
           .end((err, res) => {
             expect(err).toBe(null);
+            expect(typeof res.body).toEqual("object");
             expect(res.body).toHaveProperty(
               "message",
               "Profile update success"
@@ -226,12 +238,14 @@ describe("User routes", () => {
     describe("Error Process", () => {
       test("should send error message with status 401 because of invalid accesss_token", (done) => {
         request(app)
-          .put(`/bands/${bandId}`)
+          .put(`/bands/`)
           .send(updatedProfile)
           .set("access_token", clientToken)
           .end((err, res) => {
             expect(err).toBe(null);
-            expect(res.body).toHaveProperty("message", expect.any(Array));
+            // console.log(res.body, "-------------------ini");
+            expect(typeof res.body).toEqual("object");
+            expect(res.body).toHaveProperty("message");
             expect(res.body.message).toContain("Unauthorized account type");
             expect(res.body.message.length).toBeGreaterThan(0);
             expect(res.status).toBe(401);
@@ -240,12 +254,13 @@ describe("User routes", () => {
       });
       test("should send error message with status 401 because of access_token is not included", (done) => {
         request(app)
-          .put(`/bands/${bandId}`)
+          .put(`/bands/`)
           .send(updatedProfile)
           .end((err, res) => {
             expect(err).toBe(null);
-            expect(res.body).toHaveProperty("message", expect.any(Array));
-            expect(res.body.message).toContain("No access_token");
+            expect(typeof res.body).toEqual("object");
+            expect(res.body).toHaveProperty("message");
+            expect(res.body.message).toContain("Invalid token");
             expect(res.body.message.length).toBeGreaterThan(0);
             expect(res.status).toBe(401);
             done();
@@ -253,7 +268,7 @@ describe("User routes", () => {
       });
       test("should send error message with status 400 because of empty input validation", (done) => {
         request(app)
-          .put(`/bands/${bandId}`)
+          .put(`/bands/`)
           .send(emptyInput)
           .set("access_token", bandToken)
           .end((err, res) => {
@@ -261,7 +276,7 @@ describe("User routes", () => {
             expect(res.body).toHaveProperty("message", expect.any(Array));
             expect(res.body.message).toContain("Band name cannot be empty");
             expect(res.body.message).toContain("Location cannot be empty");
-            expect(res.body.message).toContain("Genre cannot be empty");
+            // expect(res.body.message).toContain("Genre cannot be empty");
             expect(res.body.message).toContain(
               "Rate cannot be less than 100000"
             );
