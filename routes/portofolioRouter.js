@@ -6,13 +6,13 @@ const { authenticate } = require("../middlewares/authentication");
 
 router.get("/:bandId", PortofolioController.findPortofolio);
 router.use(authenticate);
-// router.post(
-//   "/",
-//   authorizeBand,
-//   unggah.single(`file`),
-//   PortofolioController.createPorto
-// );
-router.post("/", authorizeBand, PortofolioController.createPorto);
+router.post(
+  "/",
+  authorizeBand,
+  unggah.single(`file`),
+  PortofolioController.createPorto
+);
+// router.post("/", authorizeBand, PortofolioController.createPorto);
 router.delete("/:id", authorizeBand, PortofolioController.deletePortofolio);
 
 module.exports = router;

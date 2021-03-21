@@ -102,7 +102,7 @@ describe("Portofolio routes", () => {
       test("should create portofolio with status code 201", (done) => {
         request(app)
           .post("/bands/portofolio")
-          .send(filename)
+          .attach("file", "./audio.wav")
           .set("access_token", bandToken)
           .end((err, res) => {
             portoId = res.body.id;
@@ -122,7 +122,7 @@ describe("Portofolio routes", () => {
       test("should send an error with status 401 because of invalid access_token", (done) => {
         request(app)
           .post("/bands/portofolio")
-          .send(filename)
+          .attach("file", "./audio.wav")
           .set("access_token", "123456789")
           .end((err, res) => {
             expect(err).toBe(null);
@@ -137,7 +137,7 @@ describe("Portofolio routes", () => {
       test("should send an error with status 401 because of access_token is not included", (done) => {
         request(app)
           .post("/bands/portofolio")
-          .send(filename)
+          .attach("file", "./audio.wav")
           .end((err, res) => {
             expect(err).toBe(null);
             expect(res.body).toHaveProperty("message");
@@ -150,7 +150,7 @@ describe("Portofolio routes", () => {
       test("should send an error with status 401 because of wrong accountType", (done) => {
         request(app)
           .post("/bands/portofolio")
-          .send(filename)
+          .attach("file", "./audio.wav")
           .set("access_token", clientToken)
           .end((err, res) => {
             expect(err).toBe(null);
@@ -165,7 +165,7 @@ describe("Portofolio routes", () => {
       test("should send an error with status 400 because of wrong format file type", (done) => {
         request(app)
           .post("/bands/portofolio")
-          .send(fileNameError)
+          .attach("file", "./2.png")
           .set("access_token", bandToken)
           .end((err, res) => {
             expect(err).toBe(null);
