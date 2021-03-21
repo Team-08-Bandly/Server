@@ -6,11 +6,11 @@ const unggah = require("../middlewares/unggah");
 const portofolio = require("./portofolioRouter")
 
 router.get("/", BandController.findAll);
+router.use("/portofolio", portofolio)
 router.get("/:id", BandController.find);
 router.use(authenticate);
 router.post("/", authorizeBand, BandController.createProfile);
 router.put("/", authorizeBand, BandController.updateProfile);
-router.use("/portofolio", portofolio)
 
 
 

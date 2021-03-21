@@ -17,11 +17,10 @@ class PortofolioController {
     } else if (video_ext.includes(extension)) {
       portofolioType = "video";
     } else {
-      next({ name: "customError", status: 400, message: "Wrong Format" });
-
+      throw { name: "customError", status: 400, message: "Wrong Format File Type" }
     }
     let payload = { fileUrl: filename, portofolioType }
-    Band.findOne({ where: { UserId: req.decoded.id }})
+    Band.findOne({ where: { UserId: req.decoded.id } })
       .then((band) => {
         payload.BandId = band.id
         Portofolio.create(payload)
@@ -32,15 +31,36 @@ class PortofolioController {
       })
   }
 
-  static findPortofolio (req, res, next) {
-    console.log("<<<<<<<<<<<<<< req decoded find all");
-    // Band.findOne({ where: { UserId: req.decoded.id }})
-    //   .then((data) => {
-    //     res.status(200).json(data)
-    //   })
-    //   .catch(err => {
-    //     next(err)
-    //   })
+  static findPortofolio(req, res, next) {
+    Band.findOne({ where: { UserId: req.params.id } })
+      .then((band) => {
+        return Portofolio.findAll({
+          where: {
+            BandId: band.id
+          }
+        })
+      })
+      .then(portofolio => {
+        res.status(200).json({ portofolio })
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
+
+  static deletePortofolio(req, res, next) {
+    const id = req.params.id
+    Portofolio.destroy({
+      where: {
+        id
+      }
+    })
+      .then(data => {
+        res.status(200).json({ message: 'Success Deleting Portofolio' })
+      })
+      .catch(err => {
+        next(err)
+      })
   }
 }
 
