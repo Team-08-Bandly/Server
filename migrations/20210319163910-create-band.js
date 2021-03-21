@@ -17,8 +17,14 @@ module.exports = {
       location: {
         type: Sequelize.STRING
       },
-      description: {
+      imageUrl: {
         type: Sequelize.STRING
+      },
+      coverUrl: {
+        type: Sequelize.STRING
+      },
+      description: {
+        type: Sequelize.TEXT
       },
       rate: {
         type: Sequelize.INTEGER

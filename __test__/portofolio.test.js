@@ -26,22 +26,15 @@ let bandProfile = {
   rate: 1000000,
 };
 
-
-let emptyInput = {
-  name: "",
-  desciption: "",
-  location: "",
-  genre: [],
-  rate: 0,
-};
-
 let filename = {
   file: "https://cdns.klimg.com/merdeka.com/i/w/news/2015/11/09/621048/540x270/di-sinilah-tempat-berkumpulnya-penggemar-musik-nirvana.mp3"
+}
+let fileNameError = {
+  file: "https://cdns.klimg.com/merdeka.com/i/w/news/2015/11/09/621048/540x270/di-sinilah-tempat-berkumpulnya-penggemar-musik-nirvana.jpeg"
 }
 
 let bandToken;
 let clientToken;
-let bandId;
 let userId;
 
 beforeAll((done) => {
@@ -76,7 +69,7 @@ afterAll((done) => {
 
 describe("Portofolio routes", () => {
   beforeAll((done) => {
-    bandProfile.UserId = userId 
+    bandProfile.UserId = userId
     Band.create(bandProfile)
       .then((band) => {
         bandId = band.id
@@ -165,7 +158,21 @@ describe("Portofolio routes", () => {
             done();
           });
       });
-
+      test("should send an error with status 400 because of wrong format file type", (done) => {
+        request(app)
+          .post("/bands/portofolio")
+          .send(fileNameError)
+          .set("access_token", bandToken)
+          .end((err, res) => {
+            expect(err).toBe(null);
+            expect(typeof res.body).toEqual("object")
+            expect(res.body).toHaveProperty("message");
+            expect(res.body.message).toContain("Wrong Format File Type");
+            expect(res.body.message.length).toBeGreaterThan(0);
+            expect(res.status).toBe(400);
+            done();
+          });
+      });
     })
   })
 })

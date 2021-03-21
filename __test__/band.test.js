@@ -22,6 +22,8 @@ let bandProfile = {
   name: "Dream Theater",
   description: "Prog Metal band located somewhere in America",
   location: "Jakarta",
+  imageUrl: "https://i.pinimg.com/236x/c3/92/95/c392954f24c4b0d856ead3e126d5b955.jpg",
+  coverUrl: "https://mmc.tirto.id/image/otf/880x495/2017/08/01/dreamtheater--youtube_ratio-16x9.jpg",
   genre: [1, 2],
   rate: 1000000,
 };
@@ -30,6 +32,8 @@ let emptyInput = {
   name: "",
   desciption: "",
   location: "",
+  imageUrl: "",
+  coverUrl: "",
   genre: [],
   rate: 0,
 };

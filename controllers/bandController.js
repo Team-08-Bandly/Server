@@ -30,9 +30,9 @@ module.exports = class BandController {
 
   static createProfile(req, res, next) {
     const { id } = req.decoded;
-    const { name, location, description, genre, rate } = req.body;
+    const { name, location, description, genre, rate, imageUrl, coverUrl } = req.body;
     let payload = {};
-    Band.create({ name, location, description, rate, UserId: id })
+    Band.create({ name, location, description, rate, UserId: id, imageUrl, coverUrl })
       .then((band) => {
         payload = band.dataValues;
         const bandGenres = genre.map((e) => {
@@ -50,11 +50,11 @@ module.exports = class BandController {
   }
 
   static updateProfile(req, res, next) {
-    const { name, location, description, genre, rate } = req.body;
+    const { name, location, description, genre, rate, imageUrl, coverUrl } = req.body;
     const { id } = req.decoded;
     let bandId;
     Band.update(
-      { name, location, description, rate },
+      { name, location, description, rate, imageUrl, coverUrl },
       { where: { UserId: id }, returning: true }
     )
       .then((band) => {

@@ -35,7 +35,13 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      description: DataTypes.STRING,
+      imageUrl: {
+        type: DataTypes.STRING
+      },
+      coverUrl: {
+        type: DataTypes.STRING
+      },
+      description: DataTypes.TEXT,
       rate: {
         type: DataTypes.INTEGER,
         validate: {

@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
           },
           isIn: {
             args: [["audio", "video"]],
-            msg: "Wrong type",
+            msg: "Wrong Format File Type",
           },
         },
       },
