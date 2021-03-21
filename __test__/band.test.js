@@ -18,21 +18,28 @@ let dataClient = {
   accountType: "client",
 };
 
+// let bandProfile = {
+//   name: "Dream Theater",
+//   description: "Prog Metal band located somewhere in America",
+//   location: "Jakarta",
+//   imageUrl:
+//     "https://i.pinimg.com/236x/c3/92/95/c392954f24c4b0d856ead3e126d5b955.jpg",
+//   coverUrl:
+//     "https://mmc.tirto.id/image/otf/880x495/2017/08/01/dreamtheater--youtube_ratio-16x9.jpg",
+//   genre: [1, 2],
+//   rate: 1000000,
+// };
 let bandProfile = {
   name: "Dream Theater",
   description: "Prog Metal band located somewhere in America",
   location: "Jakarta",
-  imageUrl:
-    "https://i.pinimg.com/236x/c3/92/95/c392954f24c4b0d856ead3e126d5b955.jpg",
-  coverUrl:
-    "https://mmc.tirto.id/image/otf/880x495/2017/08/01/dreamtheater--youtube_ratio-16x9.jpg",
   genre: [1, 2],
   rate: 1000000,
 };
 
 let emptyInput = {
   name: "",
-  desciption: "",
+  description: "",
   location: "",
   imageUrl: "",
   coverUrl: "",
@@ -85,10 +92,17 @@ describe("User routes", () => {
       test("should create band profile with status code 201", (done) => {
         request(app)
           .post("/bands")
-          .send(bandProfile)
+          .field("name", bandProfile.name)
+          .field("description", bandProfile.description)
+          .field("location", bandProfile.location)
+          .field("genre", bandProfile.genre)
+          .field("rate", bandProfile.rate)
+          .attach("imageUrl", "./2.png")
+          .attach("coverUrl", "./2.png")
           .set("access_token", bandToken)
           .end((err, res) => {
             expect(err).toBe(null);
+            console.log(res.body, "-----------------------");
             bandId = res.body.band.id;
             // console.log(res.body.band.id, "---------- yang mau di ambil");
             expect(res.body).toHaveProperty("band", res.body.band);
@@ -115,7 +129,13 @@ describe("User routes", () => {
       test("should send an error with status 401 because of invalid access_token", (done) => {
         request(app)
           .post("/bands")
-          .send(bandProfile)
+          .field("name", bandProfile.name)
+          .field("description", bandProfile.description)
+          .field("location", bandProfile.location)
+          .field("genre", bandProfile.genre)
+          .field("rate", bandProfile.rate)
+          .attach("imageUrl", "./2.png")
+          .attach("coverUrl", "./2.png")
           .set("access_token", clientToken)
           .end((err, res) => {
             expect(err).toBe(null);
@@ -129,7 +149,13 @@ describe("User routes", () => {
       test("should send an error with status 401 because of access_token is not included", (done) => {
         request(app)
           .post("/bands")
-          .send(bandProfile)
+          .field("name", bandProfile.name)
+          .field("description", bandProfile.description)
+          .field("location", bandProfile.location)
+          .field("genre", bandProfile.genre)
+          .field("rate", bandProfile.rate)
+          .attach("imageUrl", "./2.png")
+          .attach("coverUrl", "./2.png")
           .end((err, res) => {
             expect(err).toBe(null);
             expect(res.body).toHaveProperty("message");
@@ -142,7 +168,13 @@ describe("User routes", () => {
       test("should send an error with status 400 because empty field validation", (done) => {
         request(app)
           .post("/bands")
-          .send(emptyInput)
+          .field("name", emptyInput.name)
+          .field("description", emptyInput.description)
+          .field("location", emptyInput.location)
+          .field("genre", emptyInput.genre)
+          .field("rate", emptyInput.rate)
+          .attach("imageUrl", "./2.png")
+          .attach("coverUrl", "./2.png")
           .set("access_token", bandToken)
           .end((err, res) => {
             expect(err).toBe(null);
@@ -161,7 +193,7 @@ describe("User routes", () => {
     });
   });
 
-  //Read User
+  // //Read User
   describe("GET /bands", () => {
     //Success read
     describe("Success process", () => {
@@ -217,7 +249,7 @@ describe("User routes", () => {
       name: "Kangen Band",
       description: "Metal band located in Jakarta",
       location: "Jakarta",
-      genre: [2],
+      genre: [2, 3],
       rate: 1500000,
     };
 
@@ -226,9 +258,16 @@ describe("User routes", () => {
       test("should send Update message with status 200", (done) => {
         request(app)
           .put(`/bands/`)
-          .send(updatedProfile)
+          .field("name", updatedProfile.name)
+          .field("description", updatedProfile.description)
+          .field("location", updatedProfile.location)
+          .field("genre", updatedProfile.genre)
+          .field("rate", updatedProfile.rate)
+          .attach("imageUrl", "./2.png")
+          .attach("coverUrl", "./2.png")
           .set("access_token", bandToken)
           .end((err, res) => {
+            console.log(res.body, "-----------------update");
             expect(err).toBe(null);
             expect(typeof res.body).toEqual("object");
             expect(res.body).toHaveProperty(
@@ -245,7 +284,13 @@ describe("User routes", () => {
       test("should send error message with status 401 because of invalid accesss_token", (done) => {
         request(app)
           .put(`/bands/`)
-          .send(updatedProfile)
+          .field("name", updatedProfile.name)
+          .field("description", updatedProfile.description)
+          .field("location", updatedProfile.location)
+          .field("genre", updatedProfile.genre)
+          .field("rate", updatedProfile.rate)
+          .attach("imageUrl", "./2.png")
+          .attach("coverUrl", "./2.png")
           .set("access_token", clientToken)
           .end((err, res) => {
             expect(err).toBe(null);
@@ -261,7 +306,13 @@ describe("User routes", () => {
       test("should send error message with status 401 because of access_token is not included", (done) => {
         request(app)
           .put(`/bands/`)
-          .send(updatedProfile)
+          .field("name", updatedProfile.name)
+          .field("description", updatedProfile.description)
+          .field("location", updatedProfile.location)
+          .field("genre", updatedProfile.genre)
+          .field("rate", updatedProfile.rate)
+          .attach("imageUrl", "./2.png")
+          .attach("coverUrl", "./2.png")
           .end((err, res) => {
             expect(err).toBe(null);
             expect(typeof res.body).toEqual("object");
@@ -275,7 +326,13 @@ describe("User routes", () => {
       test("should send error message with status 400 because of empty input validation", (done) => {
         request(app)
           .put(`/bands/`)
-          .send(emptyInput)
+          .field("name", emptyInput.name)
+          .field("description", emptyInput.description)
+          .field("location", emptyInput.location)
+          .field("genre", emptyInput.genre)
+          .field("rate", emptyInput.rate)
+          .attach("imageUrl", "./2.png")
+          .attach("coverUrl", "./2.png")
           .set("access_token", bandToken)
           .end((err, res) => {
             expect(err).toBe(null);
