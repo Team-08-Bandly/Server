@@ -2,10 +2,18 @@ const request = require("supertest");
 const app = require("../app");
 const { sequelize, User } = require("../models");
 const { queryInterface } = sequelize;
+const { generateToken } = require("../helpers/jwt");
 
 let dataRegister = {
   name: "test account",
   email: "testClient@mail.com",
+  password: "testing",
+  accountType: "client",
+};
+
+let dataRegister2 = {
+  name: "test account",
+  email: "testClient1@mail.com",
   password: "testing",
   accountType: "client",
 };
@@ -22,16 +30,11 @@ let register = {
   accountType: "client",
 };
 
+let userToken;
+let wrongAccessToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InJpZGhvIGhhbnN5YWgiLCJlbWFpbCI6InJpZGhvMUBtYWlsLmNvbSIsImFjY291bnRUeXBlIjoiY2xpZW50IiwiaWF0IjoxNjE2MjI2NjgwfQ.lciaWw4D5bGhMVcei0yshEEwwu5Haqta8ZTNhgVYYjc";
 describe("User Register", () => {
   describe("POST /register", () => {
-    afterAll((done) => {
-      queryInterface
-        .bulkDelete("Users", {})
-        .then((_) => {
-          done();
-        })
-        .catch((err) => done(err));
-    });
     //? testing success
     describe("Success process", () => {
       //success
@@ -250,21 +253,14 @@ describe("User routes", () => {
   describe("POST /login", () => {
     beforeAll((done) => {
       User.create(dataRegister)
-        .then((_) => {
+        .then((data) => {
+          console.log(data.id, "dari before-------------");
+          userId = data.id;
           done();
         })
         .catch((err) => {
           done(err);
         });
-    });
-    afterAll((done) => {
-      queryInterface
-        .bulkDelete("Users", {})
-        .then((_) => {
-          sequelize.close();
-          done();
-        })
-        .catch((err) => done(err));
     });
     describe("Success process", () => {
       test("should send an object (access_token, email, id) with code 200", (done) => {
@@ -307,6 +303,95 @@ describe("User routes", () => {
               "Invalid Email/Password"
             );
             expect(res.status).toBe(401);
+            done();
+          });
+      });
+    });
+  });
+});
+
+describe("Get user by id from access token", () => {
+  describe("GET /users/", () => {
+    beforeAll((done) => {
+      User.create(dataRegister2)
+        .then((data) => {
+          userToken = generateToken({
+            id: data.id,
+            email: data.email,
+            name: data.name,
+            accountType: data.accountType,
+          });
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+    afterAll((done) => {
+      queryInterface
+        .bulkDelete("Users", {})
+        .then((_) => {
+          sequelize.close();
+          done();
+        })
+        .catch((err) => done(err));
+    });
+    describe("Success process", () => {
+      test("should send an object with status code 200", (done) => {
+        request(app)
+          .get("/users")
+          .set("access_token", userToken)
+          .end((err, res) => {
+            expect(err).toBe(null);
+            expect(typeof res.body).toEqual("object");
+            expect(res.body).toHaveProperty("id");
+            expect(err).toBe(null);
+            expect(typeof res.body).toEqual("object");
+            expect(res.body).toHaveProperty("id");
+            expect(res.body).toHaveProperty("name");
+            expect(res.body).toHaveProperty("email");
+            expect(res.body).toHaveProperty("accountType");
+            expect(res.status).toBe(200);
+            done();
+          });
+      });
+    });
+    describe("Error process", () => {
+      test("should send an error with status 401 because wrong access token", (done) => {
+        request(app)
+          .get("/users")
+          .set("access_token", "123456789")
+          .end((err, res) => {
+            expect(err).toBe(null);
+            expect(typeof res.body).toEqual("object");
+            expect(res.body).toHaveProperty("message");
+            expect(res.body.message).toContain("Invalid token");
+            expect(res.status).toBe(401);
+            done();
+          });
+      });
+      test("should send an error with status 401 because not send access token", (done) => {
+        request(app)
+          .get("/users")
+          .end((err, res) => {
+            expect(err).toBe(null);
+            expect(typeof res.body).toEqual("object");
+            expect(res.body).toHaveProperty("message");
+            expect(res.body.message).toContain("Invalid token");
+            expect(res.status).toBe(401);
+            done();
+          });
+      });
+      test("should send an error with status 401 because wrong id in access token", (done) => {
+        request(app)
+          .get("/users")
+          .set("access_token", wrongAccessToken)
+          .end((err, res) => {
+            expect(err).toBe(null);
+            expect(typeof res.body).toEqual("object");
+            expect(res.body).toHaveProperty("message");
+            expect(res.body.message).toContain("Data not found");
+            expect(res.status).toBe(404);
             done();
           });
       });
