@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1616322540372" clover="3.2.0">
-  <project timestamp="1616322540372" name="All files">
-    <metrics statements="243" coveredstatements="221" conditionals="35" coveredconditionals="27" methods="65" coveredmethods="53" elements="343" coveredelements="301" complexity="0" loc="243" ncloc="243" packages="7" files="24" classes="24"/>
-    <package name="Server">
+<coverage generated="1616336967195" clover="3.2.0">
+  <project timestamp="1616336967195" name="All files">
+    <metrics statements="248" coveredstatements="234" conditionals="39" coveredconditionals="31" methods="65" coveredmethods="60" elements="352" coveredelements="325" complexity="0" loc="248" ncloc="248" packages="7" files="24" classes="24"/>
+    <package name="server">
       <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
-      <file name="app.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\app.js">
+      <file name="app.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/app.js">
         <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="cond" truecount="1" falsecount="1"/>
         <line num="2" count="3" type="stmt"/>
@@ -21,18 +21,18 @@
         <line num="18" count="3" type="stmt"/>
       </file>
     </package>
-    <package name="Server.config">
+    <package name="server.config">
       <metrics statements="3" coveredstatements="3" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
-      <file name="config.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\config\config.js">
+      <file name="config.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/config/config.js">
         <metrics statements="3" coveredstatements="3" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="cond" truecount="1" falsecount="1"/>
         <line num="2" count="3" type="stmt"/>
         <line num="5" count="3" type="stmt"/>
       </file>
     </package>
-    <package name="Server.controllers">
-      <metrics statements="92" coveredstatements="74" conditionals="12" coveredconditionals="11" methods="38" coveredmethods="27"/>
-      <file name="authController.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\controllers\authController.js">
+    <package name="server.controllers">
+      <metrics statements="97" coveredstatements="87" conditionals="16" coveredconditionals="15" methods="38" coveredmethods="34"/>
+      <file name="authController.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/controllers/authController.js">
         <metrics statements="23" coveredstatements="23" conditionals="6" coveredconditionals="6" methods="9" coveredmethods="9"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -58,7 +58,7 @@
         <line num="58" count="1" type="stmt"/>
         <line num="61" count="1" type="stmt"/>
       </file>
-      <file name="bandController.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\controllers\bandController.js">
+      <file name="bandController.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/controllers/bandController.js">
         <metrics statements="32" coveredstatements="31" conditionals="2" coveredconditionals="2" methods="17" coveredmethods="16"/>
         <line num="1" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -93,37 +93,42 @@
         <line num="72" count="1" type="stmt"/>
         <line num="75" count="1" type="stmt"/>
       </file>
-      <file name="portofolioController.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\controllers\portofolioController.js">
-        <metrics statements="27" coveredstatements="17" conditionals="4" coveredconditionals="3" methods="10" coveredmethods="2"/>
+      <file name="portofolioController.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/controllers/portofolioController.js">
+        <metrics statements="32" coveredstatements="30" conditionals="8" coveredconditionals="7" methods="10" coveredmethods="9"/>
         <line num="1" count="3" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
         <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
         <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
         <line num="11" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
-        <line num="15" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="17" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="20" count="1" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="23" count="1" type="stmt"/>
+        <line num="13" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
         <line num="25" count="1" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
         <line num="27" count="1" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
         <line num="35" count="0" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="44" count="0" type="stmt"/>
-        <line num="47" count="0" type="stmt"/>
-        <line num="52" count="0" type="stmt"/>
-        <line num="53" count="0" type="stmt"/>
-        <line num="59" count="0" type="stmt"/>
-        <line num="62" count="0" type="stmt"/>
-        <line num="67" count="3" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="47" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="58" count="2" type="stmt"/>
+        <line num="59" count="2" type="stmt"/>
+        <line num="65" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="68" count="1" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+        <line num="76" count="3" type="stmt"/>
       </file>
-      <file name="transactionController.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\controllers\transactionController.js">
+      <file name="transactionController.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/controllers/transactionController.js">
         <metrics statements="10" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="5" count="3" type="stmt"/>
@@ -137,9 +142,9 @@
         <line num="48" count="3" type="stmt"/>
       </file>
     </package>
-    <package name="Server.helpers">
+    <package name="server.helpers">
       <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
-      <file name="bcrypt.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\helpers\bcrypt.js">
+      <file name="bcrypt.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/helpers/bcrypt.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="3" type="stmt"/>
         <line num="4" count="8" type="stmt"/>
@@ -147,52 +152,52 @@
         <line num="9" count="2" type="stmt"/>
         <line num="12" count="3" type="stmt"/>
       </file>
-      <file name="jwt.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\helpers\jwt.js">
+      <file name="jwt.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/helpers/jwt.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="3" type="stmt"/>
         <line num="4" count="6" type="stmt"/>
-        <line num="8" count="17" type="stmt"/>
+        <line num="8" count="22" type="stmt"/>
         <line num="11" count="3" type="stmt"/>
       </file>
     </package>
-    <package name="Server.middlewares">
+    <package name="server.middlewares">
       <metrics statements="30" coveredstatements="27" conditionals="10" coveredconditionals="8" methods="7" coveredmethods="6"/>
-      <file name="authentication.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\middlewares\authentication.js">
+      <file name="authentication.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/middlewares/authentication.js">
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
-        <line num="4" count="17" type="stmt"/>
-        <line num="5" count="17" type="stmt"/>
-        <line num="6" count="11" type="stmt"/>
-        <line num="7" count="11" type="stmt"/>
-        <line num="10" count="6" type="stmt"/>
-        <line num="11" count="6" type="stmt"/>
+        <line num="4" count="22" type="stmt"/>
+        <line num="5" count="22" type="stmt"/>
+        <line num="6" count="14" type="stmt"/>
+        <line num="7" count="14" type="stmt"/>
+        <line num="10" count="8" type="stmt"/>
+        <line num="11" count="8" type="stmt"/>
         <line num="15" count="3" type="stmt"/>
       </file>
-      <file name="authorize.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\middlewares\authorize.js">
+      <file name="authorize.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/middlewares/authorize.js">
         <metrics statements="9" coveredstatements="8" conditionals="4" coveredconditionals="3" methods="3" coveredmethods="3"/>
         <line num="1" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
-        <line num="4" count="9" type="stmt"/>
-        <line num="6" count="9" type="cond" truecount="1" falsecount="1"/>
+        <line num="4" count="12" type="stmt"/>
+        <line num="6" count="12" type="cond" truecount="1" falsecount="1"/>
         <line num="7" count="0" type="stmt"/>
-        <line num="9" count="9" type="cond" truecount="2" falsecount="0"/>
-        <line num="11" count="3" type="stmt"/>
-        <line num="20" count="3" type="stmt"/>
+        <line num="9" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
         <line num="24" count="3" type="stmt"/>
       </file>
-      <file name="errorHandler.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\middlewares\errorHandler.js">
+      <file name="errorHandler.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/middlewares/errorHandler.js">
         <metrics statements="8" coveredstatements="7" conditionals="6" coveredconditionals="5" methods="2" coveredmethods="2"/>
         <line num="1" count="3" type="stmt"/>
-        <line num="2" count="28" type="stmt"/>
-        <line num="3" count="28" type="cond" truecount="2" falsecount="0"/>
+        <line num="2" count="33" type="stmt"/>
+        <line num="3" count="33" type="cond" truecount="2" falsecount="0"/>
         <line num="7" count="21" type="stmt"/>
         <line num="8" count="14" type="stmt"/>
-        <line num="11" count="14" type="cond" truecount="1" falsecount="1"/>
-        <line num="12" count="14" type="stmt"/>
+        <line num="11" count="19" type="cond" truecount="1" falsecount="1"/>
+        <line num="12" count="19" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
       </file>
-      <file name="unggah.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\middlewares\unggah.js">
+      <file name="unggah.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/middlewares/unggah.js">
         <metrics statements="4" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -200,9 +205,9 @@
         <line num="18" count="3" type="stmt"/>
       </file>
     </package>
-    <package name="Server.models">
+    <package name="server.models">
       <metrics statements="52" coveredstatements="51" conditionals="9" coveredconditionals="6" methods="16" coveredmethods="16"/>
-      <file name="band.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\models\band.js">
+      <file name="band.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/models/band.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="2" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -211,7 +216,7 @@
         <line num="16" count="3" type="stmt"/>
         <line num="61" count="3" type="stmt"/>
       </file>
-      <file name="bandgenre.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\models\bandgenre.js">
+      <file name="bandgenre.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/models/bandgenre.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="2" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -220,7 +225,7 @@
         <line num="16" count="3" type="stmt"/>
         <line num="34" count="3" type="stmt"/>
       </file>
-      <file name="genre.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\models\genre.js">
+      <file name="genre.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/models/genre.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="2" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -228,7 +233,7 @@
         <line num="15" count="3" type="stmt"/>
         <line num="26" count="3" type="stmt"/>
       </file>
-      <file name="index.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\models\index.js">
+      <file name="index.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/models/index.js">
         <metrics statements="20" coveredstatements="19" conditionals="9" coveredconditionals="6" methods="3" coveredmethods="3"/>
         <line num="3" count="3" type="stmt"/>
         <line num="4" count="3" type="stmt"/>
@@ -251,7 +256,7 @@
         <line num="44" count="3" type="stmt"/>
         <line num="46" count="3" type="stmt"/>
       </file>
-      <file name="portofolio.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\models\portofolio.js">
+      <file name="portofolio.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/models/portofolio.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="2" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -259,14 +264,14 @@
         <line num="15" count="3" type="stmt"/>
         <line num="47" count="3" type="stmt"/>
       </file>
-      <file name="transaction.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\models\transaction.js">
+      <file name="transaction.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/models/transaction.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="4" count="3" type="stmt"/>
         <line num="5" count="3" type="stmt"/>
         <line num="16" count="3" type="stmt"/>
         <line num="30" count="3" type="stmt"/>
       </file>
-      <file name="user.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\models\user.js">
+      <file name="user.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/models/user.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
         <line num="2" count="3" type="stmt"/>
         <line num="4" count="3" type="stmt"/>
@@ -276,9 +281,9 @@
         <line num="103" count="3" type="stmt"/>
       </file>
     </package>
-    <package name="Server.routes">
+    <package name="server.routes">
       <metrics statements="44" coveredstatements="44" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="bandRouter.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\routes\bandRouter.js">
+      <file name="bandRouter.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/routes/bandRouter.js">
         <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -294,7 +299,7 @@
         <line num="13" count="3" type="stmt"/>
         <line num="17" count="3" type="stmt"/>
       </file>
-      <file name="index.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\routes\index.js">
+      <file name="index.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/routes/index.js">
         <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -308,7 +313,7 @@
         <line num="11" count="3" type="stmt"/>
         <line num="13" count="3" type="stmt"/>
       </file>
-      <file name="portofolioRouter.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\routes\portofolioRouter.js">
+      <file name="portofolioRouter.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/routes/portofolioRouter.js">
         <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -316,19 +321,19 @@
         <line num="4" count="3" type="stmt"/>
         <line num="5" count="3" type="stmt"/>
         <line num="7" count="3" type="stmt"/>
-        <line num="14" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
         <line num="15" count="3" type="stmt"/>
         <line num="16" count="3" type="stmt"/>
-        <line num="24" count="3" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
       </file>
-      <file name="transactionRouter.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\routes\transactionRouter.js">
+      <file name="transactionRouter.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/routes/transactionRouter.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
         <line num="4" count="3" type="stmt"/>
         <line num="6" count="3" type="stmt"/>
       </file>
-      <file name="userRouter.js" path="C:\Users\M Fiqri Milano\Documents\hacktiv8\helsinki-fox\Final-Project\Bandly\Server\routes\userRouter.js">
+      <file name="userRouter.js" path="/home/ridho/Documents/Hacktiv8/helsinki-fox/Phase 3/Final-Project/server/routes/userRouter.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
