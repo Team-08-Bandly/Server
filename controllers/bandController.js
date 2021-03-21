@@ -30,10 +30,27 @@ module.exports = class BandController {
 
   static createProfile(req, res, next) {
     const { id } = req.decoded;
-    const { name, location, description, genre, rate, imageUrl, coverUrl } = req.body;
+    const {
+      name,
+      location,
+      description,
+      genre,
+      rate,
+      imageUrl,
+      coverUrl,
+    } = req.body;
     let payload = {};
-    Band.create({ name, location, description, rate, UserId: id, imageUrl, coverUrl })
+    Band.create({
+      name,
+      location,
+      description,
+      rate,
+      UserId: id,
+      imageUrl: imageUrl[0],
+      coverUrl: coverUrl[0],
+    })
       .then((band) => {
+        console.log("masuk------------------");
         payload = band.dataValues;
         const bandGenres = genre.map((e) => {
           return { BandId: band.id, GenreId: e };
@@ -41,6 +58,7 @@ module.exports = class BandController {
         return BandGenre.bulkCreate(bandGenres);
       })
       .then((result) => {
+        console.log("masuk2------------------");
         const newResult = { ...payload, genre: result };
         res.status(201).json({ band: newResult });
       })
@@ -50,28 +68,47 @@ module.exports = class BandController {
   }
 
   static updateProfile(req, res, next) {
-    const { name, location, description, genre, rate, imageUrl, coverUrl } = req.body;
+    const {
+      name,
+      location,
+      description,
+      genre,
+      rate,
+      imageUrl,
+      coverUrl,
+    } = req.body;
     const { id } = req.decoded;
     let bandId;
     Band.update(
-      { name, location, description, rate, imageUrl, coverUrl },
+      {
+        name,
+        location,
+        description,
+        rate,
+        imageUrl: imageUrl[0],
+        coverUrl: coverUrl[0],
+      },
       { where: { UserId: id }, returning: true }
     )
       .then((band) => {
-        // console.log(band[1][0].id, "hasil band update");
+        console.log("masuk update1--------------------");
         bandId = band[1][0].id;
         return BandGenre.destroy({ where: { BandId: bandId } });
       })
       .then((_) => {
+        console.log("masuk update2--------------------");
+        console.log(genre);
         const newBandGenre = genre.map((e) => {
-          return { BandId: bandId, GenreId: e };
+          return { BandId: bandId, GenreId: Number(e) };
         });
         return BandGenre.bulkCreate(newBandGenre);
       })
       .then((_) => {
+        console.log("masuk update3--------------------");
         res.status(200).json({ message: "Profile update success" });
       })
       .catch((err) => {
+        console.log(err, "err --------------------");
         next(err);
       });
   }
