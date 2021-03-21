@@ -76,21 +76,31 @@ module.exports = class BandController {
       });
   }
 
-  static createPorto(req, res, next) {
-    let filename = req.body;
-    let extension = filename.split(".").pop();
+  // static createPorto(req, res, next) {
+  //   let { file } = req.body;
+  //   let filename = file
+  //   let extension = filename.split(".").pop();
 
-    let audio_ext = ["mp3", "wav"];
-    let video_ext = ["mp4"];
-    let type = "";
+  //   let audio_ext = ["mp3", "wav"];
+  //   let video_ext = ["mp4"];
+  //   let portofolioType = "";
 
-    if (audio_ext.includes(extension)) {
-      type = "audio";
-    } else if (video_ext.includes(extension)) {
-      type = "video";
-    } else {
-      next({ name: "customError", status: 400, message: "Wrong Format" });
-    }
-    res.send(req.body);
-  }
+  //   if (audio_ext.includes(extension)) {
+  //     portofolioType = "audio";
+  //   } else if (video_ext.includes(extension)) {
+  //     portofolioType = "video";
+  //   } else {
+  //     next({ name: "customError", status: 400, message: "Wrong Format" });
+
+  //   }
+  //   let payload = { fileUrl: filename, portofolioType }
+  //   Band.findOne({ where: { UserId: req.decoded.id }})
+  //     .then((band) => {
+  //       payload.BandId = band.id
+  //       res.status(201).json(payload)
+  //     })
+  //     .catch((err) => {
+  //       next(err)
+  //     })
+  // }
 };
