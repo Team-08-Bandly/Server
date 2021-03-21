@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Band.belongsToMany(models.Genre, { through: models.BandGenre });
       Band.hasMany(models.Portofolio);
+      Band.hasMany(models.Transaction);
     }
   }
   Band.init(

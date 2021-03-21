@@ -11,14 +11,43 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Transaction.belongsTo(models.Band)
+      Transaction.belongsTo(models.User)
     }
   };
   Transaction.init({
-    ClientId: DataTypes.INTEGER,
+    UserId: DataTypes.INTEGER,
     BandId: DataTypes.INTEGER,
-    date: DataTypes.DATE,
-    duration: DataTypes.INTEGER,
-    address: DataTypes.STRING,
+    date: {
+      type: DataTypes.DATE,
+      validate: {
+        notEmpty: {
+          msg: "Date cannot be empty"
+        },
+        isDate: {
+          msg: "Date type must be date"
+        }
+      }
+    },
+    duration: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          msg: "Duration cannot be empty"
+        },
+        isInt: {
+          msg: "Duration type must be integer"
+        }
+      }
+    },
+    address: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Address cannot be empty"
+        }
+      }
+    },
     rating: {
       type: DataTypes.DECIMAL(2, 1)
     },
