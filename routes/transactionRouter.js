@@ -1,6 +1,8 @@
-const router = require("express").Router();
-const transactionController = require("../controllers/transactionController");
+const router = require('express').Router()
+const transactionController = require('../controllers/transactionController')
+const { authenticate } = require('../middlewares/authentication')
 
-router.get('/reqSnapToken',transactionController.reqSnap);
+router.use(authenticate)
+router.get('/reqSnapToken', transactionController.reqSnap)
 
-module.exports = router;
+module.exports = router
