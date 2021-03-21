@@ -1,5 +1,5 @@
-'use strict'
-const { Model } = require('sequelize')
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Band extends Model {
     /**
@@ -7,24 +7,50 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate (models) {
+    static associate(models) {
       // define association here
-      Band.belongsToMany(models.Genre, { through: models.BandGenre })
+      Band.belongsToMany(models.Genre, { through: models.BandGenre });
+      Band.hasMany(models.Portofolio);
     }
   }
   Band.init(
     {
-      name: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Band name cannot be empty",
+          },
+        },
+      },
+
       UserId: DataTypes.INTEGER,
-      location: DataTypes.STRING,
+      location: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Location cannot be empty",
+          },
+        },
+      },
       description: DataTypes.STRING,
-      rate: DataTypes.INTEGER
+      rate: {
+        type: DataTypes.INTEGER,
+        validate: {
+          min: {
+            args: 100000,
+            msg: "Rate cannot be less than 100000",
+          },
+        },
+      },
     },
     {
       sequelize,
-      modelName: 'Band'
+      modelName: "Band",
     }
-  )
+  );
 
-  return Band
-}
+  return Band;
+};

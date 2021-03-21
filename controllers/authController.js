@@ -50,8 +50,11 @@ module.exports = class AuthController {
   static getUserById(req, res, next) {
     User.findByPk(req.decoded.id)
       .then((data) => {
-        const { id, email, accountType } = data;
-        const result = { id, email, accountType };
+        if (!data) {
+          throw { name: "customError", status: 404, message: "Data not found" };
+        }
+        const { id, email, name, accountType } = data;
+        const result = { id, email, name, accountType };
         res.status(200).json(result);
       })
       .catch((err) => {
