@@ -9,7 +9,9 @@
 - GET /bands/:id
 - POST /bands
 - PUT /bands
-- POST /portofolio
+- POST /bands/portofolio
+- GET /bands/portofolio/:bandId
+- DELETE /bands/portofolio/:id
 ```
 
 ## RESTfull Endpoint
@@ -91,6 +93,8 @@ Response
       "description": "String",
       "rate": "Integer",
       "UserId": "Integer",
+      "imageUrl": "string",
+      "coverUrl": "string",
       "Genre": [
         {
           "id": "Integer",
@@ -123,6 +127,8 @@ Response
   "location": "String",
   "description": "String",
   "rate": "Integer",
+  "imageUrl": "string",
+  "coverUrl": "string",
   "Genres": [
       {
         "id": "Integer",
@@ -142,6 +148,8 @@ Response
 Request
 ```json
 - headers: access_token string
+- imageUrl: imageUrl.jpeg
+- coverUrl: coverUrl.jpeg
 {
   "name": "String",
   "location": "String",
@@ -177,6 +185,8 @@ Response
 Request
 ```json
 - headers = access_token string
+- imageUrl = imageUrl.jpeg
+- coverUrl = coverUrl.jpeg
 {
   "name": "String",
   "location": "String",
@@ -195,17 +205,57 @@ Response
 ```
 
 
-### POST /portofolio (unggah portofolio)
+### POST /bands/portofolio (unggah portofolio)
 
 Request
 ```json
 - headers = access_token string
-- something
+- file = file.mp4
 ```
 
 Response
 ```json
-
+- status : 201
+{
+  "fileUrl": "String",
+  "portofolioType": "String",
+  "BandId": "Integer",
+  "id": "integer",
+}
 
 ```
 
+### GET /bands/portofolio/:bandId (get all portofolio in the band by bandId)
+
+Request
+```json
+- params = bandId integer
+```
+
+Response
+```json
+{
+  "portofolio": [
+    {
+      "id": "integer",
+      "BandId": "integer",
+      "portofolioType": "string",
+      "fileUrl": "string",
+    }
+  ]
+}
+```
+
+### DELETE /bands/portofolio/:id (delete portofolio by id portofolio)
+
+Request
+```json
+- params = id integer
+```
+
+Response
+```json
+{
+    "message": "Success Deleting Portofolio"
+}
+```
