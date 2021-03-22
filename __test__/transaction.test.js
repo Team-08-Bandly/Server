@@ -1,6 +1,6 @@
 const request = require("supertest");
 const app = require("../app");
-const { sequelize, User, Band } = require("../models");
+const { sequelize, User, Band, Transaction } = require("../models");
 const { queryInterface } = sequelize;
 const { generateToken } = require("../helpers/jwt");
 
@@ -39,6 +39,7 @@ let transaction = {
 let bandToken;
 let clientToken;
 let userId;
+let clientId;
 let portoId;
 let bandId;
 
@@ -52,6 +53,7 @@ beforeAll((done) => {
         accountType: band.accountType,
       });
       userId = band.id;
+
       console.log(band.id, "---------------user band");
       return User.create(dataClient);
     })
@@ -64,6 +66,7 @@ beforeAll((done) => {
       });
       console.log(client.id, "----------------user client");
       bandProfile.UserId = userId;
+      clientId = client.id
       return Band.create(bandProfile);
     })
     .then((data) => {
@@ -106,4 +109,93 @@ describe("Transaction routes", () => {
         });
     });
   });
+
 });
+
+let ratingReview = {
+  rating: 4.4,
+  review: "goooood"
+}
+
+let transactionId;
+
+describe("Update Transaction", () => {
+  beforeAll((done) => {
+    console.log(bandId, '<<<<<<<<<<<<<<<<<<<<<<band id dari before all');
+    Transaction.create({ UserId: clientId, BandId: bandId, date: new Date(), duration: 2, address: "jakarta" })
+      .then((data) => {
+        console.log(data, "----------------------data dari transaction create");
+        transactionId = data.id
+        done()
+      })
+      .catch(err => {
+        done(err)
+      })
+  })
+  describe("PATCH /transactions/:id", () => {
+    test("should update review and rating with status 200", (done) => {
+      request(app)
+        .patch("/transactions/"+ transactionId)
+        .send(ratingReview)
+        .set("access_token", clientToken)
+        .end((err, res) => {
+          expect(err).toBe(null)
+          expect(typeof res.body).toEqual("object")
+          expect(res.body).toHaveProperty("message")
+          expect(res.body.message).toContain("Success give rating & review")
+          expect(res.status).toBe(200)
+          done()
+        })
+    })
+
+  })
+  //error
+  describe("Error review transaction", () => {
+    test("should send error because of not input access_token with status 401", (done) => {
+      request(app)
+      .patch("/transactions/"+ transactionId)
+      .send(ratingReview)
+      .end((err, res) => {
+        expect(err).toBe(null)
+        expect(typeof res.body).toEqual("object")
+        expect(res.body).toHaveProperty("message")
+        expect(res.body.message).toContain("Invalid token")
+        expect(res.status).toBe(401)
+        done()
+      })
+    })
+    test("should send error because of wrong access_token with status 401", (done) => {
+      request(app)
+        .patch("/transactions/"+ transactionId)
+        .send(ratingReview)
+        .set("access_token", bandToken)
+        .end((err, res) => {
+          expect(err).toBe(null)
+          expect(typeof res.body).toEqual("object")
+          expect(res.body).toHaveProperty("message")
+          expect(res.body.message).toContain("Unauthorize access")
+          expect(res.status).toBe(401)
+          done()
+      })
+    })
+    test("should send error because of transaction id not found with status 404", (done) => {
+      request(app)
+        .patch("/transactions/"+ (transactionId+1))
+        .send(ratingReview)
+        .set("access_token", clientToken)
+        .end((err, res) => {
+          expect(err).toBe(null)
+          expect(typeof res.body).toEqual("object")
+          expect(res.body).toHaveProperty("message")
+          expect(res.body.message).toContain("Data not found")
+          expect(res.status).toBe(404)
+          done()
+        })
+    })
+  })
+
+})
+
+describe("GET transaction by bandId", () => {
+  
+})
