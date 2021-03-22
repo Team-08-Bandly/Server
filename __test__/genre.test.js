@@ -1,7 +1,5 @@
 const request = require("supertest");
 const app = require("../app");
-const { sequelize, User } = require("../models");
-const { queryInterface } = sequelize;
 
 describe("GET /genres/", () => {
   test("should send genres with status 200", (done) => {

@@ -30,10 +30,6 @@ let filename = {
   file:
     "https://cdns.klimg.com/merdeka.com/i/w/news/2015/11/09/621048/540x270/di-sinilah-tempat-berkumpulnya-penggemar-musik-nirvana.mp3",
 };
-let fileNameError = {
-  file:
-    "https://cdns.klimg.com/merdeka.com/i/w/news/2015/11/09/621048/540x270/di-sinilah-tempat-berkumpulnya-penggemar-musik-nirvana.jpeg",
-};
 
 let bandToken;
 let clientToken;
