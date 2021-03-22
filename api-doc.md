@@ -2,16 +2,27 @@
 
 ## list of Endpoints
 ```
+
 - POST /register
 - POST /login
+
 - GET /users
+
 - GET /bands
 - GET /bands/:id
 - POST /bands
 - PUT /bands
+
 - POST /bands/portofolio
 - GET /bands/portofolio/:bandId
 - DELETE /bands/portofolio/:id
+- POST /bands/portofolio/url
+
+- GET /transactions/:bandId
+- GET /transactions
+- PATCH /transactions/:id
+
+- GET /genres
 ```
 
 ## RESTfull Endpoint
@@ -259,3 +270,107 @@ Response
     "message": "Success Deleting Portofolio"
 }
 ```
+
+### POST /bands/portofolio/url (create porto with url link)
+
+Request
+```json
+- headers = access_token string
+{
+  "fileUrl": "string",
+  "portofolioType": "string"
+}
+```
+
+Response
+```json
+- status = 201
+{
+  "fileUrl": "string",
+  "portofolioType": "string",
+  "BandId": "integer"
+}
+```
+
+
+### GET /transactions/:bandId
+
+Request
+```json
+- params = bandId integer
+```
+
+Response
+```json
+- status = 200
+{
+  "transactions": [
+    {
+      "id": "integer",
+      "UserId": "integer",
+      "BandId": "integer",
+      "date": "date",
+      "duration": "integer",
+      "address": "string",
+      "rating": "decimal",
+      "review": "string"
+    }
+  ]
+}
+```
+
+### GET /transactions
+
+Request
+```json
+- headers = access_token string
+- query = "/transactions?name=ridho&location=jakarta&duration=2&date=2021-03-22&bandId=" + bandId
+```
+
+Response
+```json
+- status: 201
+{
+  "snapToken": "string"
+}
+```
+
+### PATCH /transactions/:id
+
+Request
+```json
+- headers = access_token string
+- params = id integer
+{
+  "rating": "decimal",
+  "review": "string"
+}
+```
+
+Response
+```json
+- status = 200
+{ 
+  "message": "Success give rating & review" 
+}
+```
+
+### GET /genres
+
+Request
+```json
+```
+
+Response
+```json
+{
+  "genres": [
+    {
+      "name": "string"
+    }
+  ]
+}
+```
+
+
+
