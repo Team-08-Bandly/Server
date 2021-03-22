@@ -104,8 +104,8 @@ describe("Transaction routes", () => {
 
           expect(err).toBe(null);
           expect(typeof res.body).toEqual("object");
-          // expect(res.body).toHaveProperty("snapToken");
-          expect(res.status).toBe(500);
+          expect(res.body).toHaveProperty("snapToken");
+          expect(res.status).toBe(201);
           done();
         });
     });
