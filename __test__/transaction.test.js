@@ -66,7 +66,7 @@ beforeAll((done) => {
       });
       console.log(client.id, "----------------user client");
       bandProfile.UserId = userId;
-      clientId = client.id
+      clientId = client.id;
       return Band.create(bandProfile);
     })
     .then((data) => {
@@ -109,93 +109,108 @@ describe("Transaction routes", () => {
         });
     });
   });
-
 });
 
 let ratingReview = {
   rating: 4.4,
-  review: "goooood"
-}
+  review: "goooood",
+};
 
 let transactionId;
 
 describe("Update Transaction", () => {
   beforeAll((done) => {
-    console.log(bandId, '<<<<<<<<<<<<<<<<<<<<<<band id dari before all');
-    Transaction.create({ UserId: clientId, BandId: bandId, date: new Date(), duration: 2, address: "jakarta" })
+    console.log(bandId, "<<<<<<<<<<<<<<<<<<<<<<band id dari before all");
+    Transaction.create({
+      UserId: clientId,
+      BandId: bandId,
+      date: new Date(),
+      duration: 2,
+      address: "jakarta",
+    })
       .then((data) => {
         console.log(data, "----------------------data dari transaction create");
-        transactionId = data.id
-        done()
+        transactionId = data.id;
+        done();
       })
-      .catch(err => {
-        done(err)
-      })
-  })
+      .catch((err) => {
+        done(err);
+      });
+  });
   describe("PATCH /transactions/:id", () => {
     test("should update review and rating with status 200", (done) => {
       request(app)
-        .patch("/transactions/"+ transactionId)
+        .patch("/transactions/" + transactionId)
         .send(ratingReview)
         .set("access_token", clientToken)
         .end((err, res) => {
-          expect(err).toBe(null)
-          expect(typeof res.body).toEqual("object")
-          expect(res.body).toHaveProperty("message")
-          expect(res.body.message).toContain("Success give rating & review")
-          expect(res.status).toBe(200)
-          done()
-        })
-    })
-
-  })
+          expect(err).toBe(null);
+          expect(typeof res.body).toEqual("object");
+          expect(res.body).toHaveProperty("message");
+          expect(res.body.message).toContain("Success give rating & review");
+          expect(res.status).toBe(200);
+          done();
+        });
+    });
+  });
   //error
   describe("Error review transaction", () => {
     test("should send error because of not input access_token with status 401", (done) => {
       request(app)
-      .patch("/transactions/"+ transactionId)
-      .send(ratingReview)
-      .end((err, res) => {
-        expect(err).toBe(null)
-        expect(typeof res.body).toEqual("object")
-        expect(res.body).toHaveProperty("message")
-        expect(res.body.message).toContain("Invalid token")
-        expect(res.status).toBe(401)
-        done()
-      })
-    })
+        .patch("/transactions/" + transactionId)
+        .send(ratingReview)
+        .end((err, res) => {
+          expect(err).toBe(null);
+          expect(typeof res.body).toEqual("object");
+          expect(res.body).toHaveProperty("message");
+          expect(res.body.message).toContain("Invalid token");
+          expect(res.status).toBe(401);
+          done();
+        });
+    });
     test("should send error because of wrong access_token with status 401", (done) => {
       request(app)
-        .patch("/transactions/"+ transactionId)
+        .patch("/transactions/" + transactionId)
         .send(ratingReview)
         .set("access_token", bandToken)
         .end((err, res) => {
-          expect(err).toBe(null)
-          expect(typeof res.body).toEqual("object")
-          expect(res.body).toHaveProperty("message")
-          expect(res.body.message).toContain("Unauthorize access")
-          expect(res.status).toBe(401)
-          done()
-      })
-    })
+          expect(err).toBe(null);
+          expect(typeof res.body).toEqual("object");
+          expect(res.body).toHaveProperty("message");
+          expect(res.body.message).toContain("Unauthorize access");
+          expect(res.status).toBe(401);
+          done();
+        });
+    });
     test("should send error because of transaction id not found with status 404", (done) => {
       request(app)
-        .patch("/transactions/"+ (transactionId+1))
+        .patch("/transactions/" + (transactionId + 1))
         .send(ratingReview)
         .set("access_token", clientToken)
         .end((err, res) => {
-          expect(err).toBe(null)
-          expect(typeof res.body).toEqual("object")
-          expect(res.body).toHaveProperty("message")
-          expect(res.body.message).toContain("Data not found")
-          expect(res.status).toBe(404)
-          done()
-        })
-    })
-  })
-
-})
+          expect(err).toBe(null);
+          expect(typeof res.body).toEqual("object");
+          expect(res.body).toHaveProperty("message");
+          expect(res.body.message).toContain("Data not found");
+          expect(res.status).toBe(404);
+          done();
+        });
+    });
+  });
+});
 
 describe("GET transaction by bandId", () => {
-  
-})
+  describe("Success get transaction", () => {
+    test("should return array transaction bandId with status 200", (done) => {
+      request(app)
+        .get("/transactions/" + bandId)
+        .end((err, res) => {
+          console.log(res.body, "-----------------ini");
+          expect(err).toBe(null);
+          expect(res.body).toHaveProperty("transactions", expect.any(Array));
+          expect(res.status).toBe(200);
+          done();
+        });
+    });
+  });
+});

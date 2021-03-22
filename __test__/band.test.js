@@ -350,4 +350,36 @@ describe("User routes", () => {
       });
     });
   });
+
+  describe("GET /bands with authenticate", () => {
+    //success
+    describe("Success proccess", () => {
+      test("should send data band with authenticate from access_token with status 200", (done) => {
+        request(app)
+          .get("/bands/myProfile")
+          .set("access_token", bandToken)
+          .end((err, res) => {
+            expect(err).toBe(null);
+            expect(typeof res.body).toEqual("object");
+            expect(res.body).toHaveProperty("band");
+            expect(res.status).toBe(200);
+            done();
+          });
+      });
+    });
+    //error
+    describe("Error process", () => {
+      test("should send error because not input access_token with status 401", (done) => {
+        request(app)
+          .get("/bands/myProfile")
+          .end((err, res) => {
+            expect(err).toBe(null);
+            expect(res.body).toHaveProperty("message");
+            expect(res.body.message).toContain("Invalid token");
+            expect(res.status).toBe(401);
+            done();
+          });
+      });
+    });
+  });
 });
