@@ -50,7 +50,6 @@ module.exports = class BandController {
       coverUrl: coverUrl[0],
     })
       .then((band) => {
-        console.log("masuk------------------");
         payload = band.dataValues;
         const bandGenres = genre.map((e) => {
           return { BandId: band.id, GenreId: e };
@@ -58,7 +57,6 @@ module.exports = class BandController {
         return BandGenre.bulkCreate(bandGenres);
       })
       .then((result) => {
-        console.log("masuk2------------------");
         const newResult = { ...payload, genre: result };
         res.status(201).json({ band: newResult });
       })
@@ -79,50 +77,45 @@ module.exports = class BandController {
     } = req.body;
     const { id } = req.decoded;
     let bandId;
-    
+
     let updatedData = {
       name,
       location,
       description,
       rate
     }
-    if(imageUrl != 'null')
+    if (imageUrl != 'null')
       updatedData.imageUrl = imageUrl[0];
 
-    if(coverUrl != 'null')
+    if (coverUrl != 'null')
       updatedData.coverUrl = coverUrl[0];
-    
+
     Band.update(
       updatedData,
       { where: { UserId: id }, returning: true }
     )
       .then((band) => {
-        console.log("masuk update1--------------------");
         bandId = band[1][0].id;
         return BandGenre.destroy({ where: { BandId: bandId } });
       })
       .then((_) => {
-        console.log("masuk update2--------------------");
-        console.log(genre);
         const newBandGenre = genre.map((e) => {
           return { BandId: bandId, GenreId: Number(e) };
         });
         return BandGenre.bulkCreate(newBandGenre);
       })
       .then((_) => {
-        console.log("masuk update3--------------------");
         res.status(200).json({ message: "Profile update success" });
       })
       .catch((err) => {
-        console.log(err, "err --------------------");
         next(err);
       });
   }
-    static getMyBandProfile(req,res,next){
-      const { id } = req.decoded;
-      Band.findOne({ where: { UserId: id }, include: Genre })
+  static getMyBandProfile(req, res, next) {
+    const { id } = req.decoded;
+    Band.findOne({ where: { UserId: id }, include: Genre })
       .then((band) => {
         res.status(200).json({ band: band });
       })
-    }
+  }
 };

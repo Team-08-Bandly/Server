@@ -1,6 +1,6 @@
 const request = require("supertest");
 const app = require("../app");
-const { sequelize, User, Band } = require("../models");
+const { sequelize, User } = require("../models");
 const { queryInterface } = sequelize;
 const { generateToken } = require("../helpers/jwt");
 
@@ -18,17 +18,6 @@ let dataClient = {
   accountType: "client",
 };
 
-// let bandProfile = {
-//   name: "Dream Theater",
-//   description: "Prog Metal band located somewhere in America",
-//   location: "Jakarta",
-//   imageUrl:
-//     "https://i.pinimg.com/236x/c3/92/95/c392954f24c4b0d856ead3e126d5b955.jpg",
-//   coverUrl:
-//     "https://mmc.tirto.id/image/otf/880x495/2017/08/01/dreamtheater--youtube_ratio-16x9.jpg",
-//   genre: [1, 2],
-//   rate: 1000000,
-// };
 let bandProfile = {
   name: "Dream Theater",
   description: "Prog Metal band located somewhere in America",
@@ -102,9 +91,7 @@ describe("User routes", () => {
           .set("access_token", bandToken)
           .end((err, res) => {
             expect(err).toBe(null);
-            console.log(res.body, "-----------------------");
             bandId = res.body.band.id;
-            // console.log(res.body.band.id, "---------- yang mau di ambil");
             expect(res.body).toHaveProperty("band", res.body.band);
             expect(res.body.band).toHaveProperty("id", expect.any(Number));
             expect(res.body.band).toHaveProperty("UserId", expect.any(Number));
@@ -267,7 +254,6 @@ describe("User routes", () => {
           .attach("coverUrl", "./2.png")
           .set("access_token", bandToken)
           .end((err, res) => {
-            console.log(res.body, "-----------------update");
             expect(err).toBe(null);
             expect(typeof res.body).toEqual("object");
             expect(res.body).toHaveProperty(
@@ -294,7 +280,6 @@ describe("User routes", () => {
           .set("access_token", clientToken)
           .end((err, res) => {
             expect(err).toBe(null);
-            // console.log(res.body, "-------------------ini");
             expect(typeof res.body).toEqual("object");
             expect(res.body).toHaveProperty("message");
             expect(res.body.message).toContain("Unauthorized account type");

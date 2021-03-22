@@ -53,8 +53,6 @@ beforeAll((done) => {
         accountType: band.accountType,
       });
       userId = band.id;
-
-      // console.log(band.id, "---------------user band");
       return User.create(dataClient);
     })
     .then((client) => {
@@ -64,13 +62,11 @@ beforeAll((done) => {
         name: client.name,
         accountType: client.accountType,
       });
-      // console.log(client.id, "----------------user client");
       bandProfile.UserId = userId;
       clientId = client.id;
       return Band.create(bandProfile);
     })
     .then((data) => {
-      // console.log(data, "------------------ data band");
       bandId = data.id;
       transaction.bandId = data.id;
       done();
@@ -97,7 +93,7 @@ describe("Transaction routes", () => {
       request(app)
         .get(
           "/transactions?name=ridho&location=jakarta&duration=2&date=2021-03-22&bandId=" +
-            bandId
+          bandId
         )
         .set("access_token", clientToken)
         .end((err, res) => {
@@ -121,7 +117,6 @@ let transactionId;
 
 describe("Update Transaction", () => {
   beforeAll((done) => {
-    console.log(bandId, "<<<<<<<<<<<<<<<<<<<<<<band id dari before all");
     Transaction.create({
       UserId: clientId,
       BandId: bandId,
@@ -130,7 +125,6 @@ describe("Update Transaction", () => {
       address: "jakarta",
     })
       .then((data) => {
-        console.log(data, "----------------------data dari transaction create");
         transactionId = data.id;
         done();
       })
@@ -206,7 +200,6 @@ describe("GET transaction by bandId", () => {
       request(app)
         .get("/transactions/" + bandId)
         .end((err, res) => {
-          console.log(res.body, "-----------------ini");
           expect(err).toBe(null);
           expect(res.body).toHaveProperty("transactions", expect.any(Array));
           expect(res.status).toBe(200);

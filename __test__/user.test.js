@@ -254,7 +254,6 @@ describe("User routes", () => {
     beforeAll((done) => {
       User.create(dataRegister)
         .then((data) => {
-          console.log(data.id, "dari before-------------");
           userId = data.id;
           done();
         })

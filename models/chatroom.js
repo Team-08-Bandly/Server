@@ -18,7 +18,13 @@ module.exports = (sequelize, DataTypes) => {
   ChatRoom.init({
     UserId: DataTypes.INTEGER,
     BandId: DataTypes.INTEGER,
-    RoomId: DataTypes.STRING
+    RoomId: {
+      type: DataTypes.STRING,
+      unique: {
+        args: true,
+        msg: "RoomId is already exists",
+      }
+    }
   }, {
     sequelize,
     modelName: 'ChatRoom',

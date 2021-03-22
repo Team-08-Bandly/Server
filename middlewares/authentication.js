@@ -5,8 +5,7 @@ const authenticate = function (req, res, next) {
     const decoded = verifyToken(req.headers.access_token)
     req.decoded = decoded
     next()
-  } catch(err) {
-    // console.log(err)
+  } catch (err) {
     const errors = { name: "customError", status: 401, message: "Invalid token" }
     next(errors)
   }
