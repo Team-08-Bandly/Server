@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       Band.belongsToMany(models.Genre, { through: models.BandGenre });
       Band.hasMany(models.Portofolio);
       Band.hasMany(models.Transaction);
-      Band.hasMany(model.ChatRoom)
+      Band.hasMany(models.ChatRoom);
     }
   }
   Band.init(
@@ -38,10 +38,10 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       imageUrl: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
       },
       coverUrl: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
       },
       description: DataTypes.TEXT,
       rate: {
