@@ -47,7 +47,10 @@ class transactionController {
         date: new Date(date),
         duration: +duration,
       });
-      console.log(transaction, '----------------------- hasil create transaction');
+      console.log(
+        transaction,
+        "----------------------- hasil create transaction"
+      );
       let snapToken = snapResp.data.token;
       res.json({ snapToken });
     } catch (error) {
@@ -59,16 +62,20 @@ class transactionController {
     const id = req.params.id;
     const { rating, review } = req.body;
 
-    Transaction.findOne({ where: { id }})
+    Transaction.findOne({ where: { id } })
       .then((data) => {
         console.log(data);
         if (!data) {
           throw { name: "customError", status: 404, message: "Data not found" };
         }
-        if ( data.UserId === req.decoded.id ) {
-          return Transaction.update({ rating, review }, { where: { id }})
+        if (data.UserId === req.decoded.id) {
+          return Transaction.update({ rating, review }, { where: { id } });
         } else {
-          throw { name: "customError", status: 401, message: "Unauthorize access" };
+          throw {
+            name: "customError",
+            status: 401,
+            message: "Unauthorize access",
+          };
         }
       })
       .then((_) => {
@@ -80,18 +87,16 @@ class transactionController {
   }
 
   static getTransactionById(req, res, next) {
-    const bandId = req.params.bandId
-    Transaction.findAll({ where: { BandId: bandId }})
+    const bandId = req.params.bandId;
+    Transaction.findAll({ where: { BandId: bandId } })
       .then((transactions) => {
-        console.log(transactions)
-        res.status(200).json(transactions)
+        console.log(transactions);
+        res.status(200).json({ transactions });
       })
-      .catch(err => {
-        next(err)
-      })
+      .catch((err) => {
+        next(err);
+      });
   }
-
-
 }
 
 module.exports = transactionController;
