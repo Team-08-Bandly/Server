@@ -36,6 +36,20 @@ class PortofolioController {
       });
   }
 
+  static createPortoUsingUrl(req, res, next) {
+    const { fileUrl, portofolioType } = req.body
+    Band.findOne({ where: { UserId: req.decoded.id }})
+      .then((band) => {
+        return Portofolio.create({ BandId: band.id, fileUrl, portofolioType })
+      })
+      .then(porto => {
+        res.status(201).json(porto)
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
+
   static findPortofolio(req, res, next) {
     const bandId = req.params.bandId;
     Portofolio.findAll({

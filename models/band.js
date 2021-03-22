@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       Band.belongsToMany(models.Genre, { through: models.BandGenre });
       Band.hasMany(models.Portofolio);
       Band.hasMany(models.Transaction);
+      Band.hasMany(model.ChatRoom)
     }
   }
   Band.init(

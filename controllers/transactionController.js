@@ -4,13 +4,15 @@ const { Band, Transaction } = require("../models/");
 class transactionController {
   static reqSnap = async (req, res, next) => {
     try {
+      console.log(req.query, '------------------- req query');
       const decoded = req.decoded;
       const { name, location, date, duration, bandId } = req.query;
-      console.log(new Date(date));
+      // console.log(new Date(date));
       let getCurrentTimestamp = () => {
         return "" + Math.round(new Date().getTime() / 1000);
       };
       let band = await Band.findByPk(+bandId);
+      console.log(band, '----------------------band sdfgh');
       let snapResp = await axios({
         url: "https://app.sandbox.midtrans.com/snap/v1/transactions",
         method: "POST",
@@ -39,6 +41,8 @@ class transactionController {
           },
         },
       });
+      
+      console.log(snapResp, '------------------snapResp hasil');
       const transaction = await Transaction.create({
         name,
         address: location,
@@ -47,13 +51,14 @@ class transactionController {
         date: new Date(date),
         duration: +duration,
       });
-      console.log(
-        transaction,
-        "----------------------- hasil create transaction"
-      );
+      // console.log(
+      //   transaction,
+      //   "----------------------- hasil create transaction"
+      // );
       let snapToken = snapResp.data.token;
-      res.json({ snapToken });
+      res.status(201).json({ snapToken });
     } catch (error) {
+      console.log(error, "-------------------------errorrrr");
       next(error);
     }
   };

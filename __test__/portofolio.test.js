@@ -282,4 +282,85 @@ describe("Portofolio routes", () => {
       });
     });
   });
+  describe("POST /bands/portofolio/url", () => {
+    //success process
+    describe("Success process", () => {
+      test("should create portofolio with status code 201", (done) => {
+        request(app)
+          .post("/bands/portofolio/url")
+          .send({ fileUrl: filename.file, portofolioType: 'video' })
+          .set("access_token", bandToken)
+          .end((err, res) => {
+            expect(err).toBe(null)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty("fileUrl");
+            expect(res.body).toHaveProperty("portofolioType");
+            expect(res.body).toHaveProperty("BandId");
+            expect(res.status).toBe(201);
+            done();
+          })
+      })
+    })
+    //error process
+    describe("Error process", () => {
+      test("should send an error with status 401 because of invalid access_token", (done) => {
+        request(app)
+          .post("/bands/portofolio/url")
+          .send({ fileUrl: filename.file, portofolioType: 'audio' })
+          .set("access_token", "123456789")
+          .end((err, res) => {
+            expect(err).toBe(null);
+            expect(typeof res.body).toEqual("object");
+            expect(res.body).toHaveProperty("message");
+            expect(res.body.message).toContain("Invalid token");
+            expect(res.body.message.length).toBeGreaterThan(0);
+            expect(res.status).toBe(401);
+            done();
+          });
+      });
+      test("should send an error with status 401 because of access_token is not included", (done) => {
+        request(app)
+          .post("/bands/portofolio/url")
+          .send({ fileUrl: filename.file, portofolioType: 'audio' })
+          .end((err, res) => {
+            expect(err).toBe(null);
+            expect(res.body).toHaveProperty("message");
+            expect(res.body.message).toContain("Invalid token");
+            expect(res.body.message.length).toBeGreaterThan(0);
+            expect(res.status).toBe(401);
+            done();
+          });
+      });
+      test("should send an error with status 401 because of wrong accountType", (done) => {
+        request(app)
+          .post("/bands/portofolio/url")
+          .send({ fileUrl: filename.file, portofolioType: 'audio' })
+          .set("access_token", clientToken)
+          .end((err, res) => {
+            expect(err).toBe(null);
+            expect(typeof res.body).toEqual("object");
+            expect(res.body).toHaveProperty("message");
+            expect(res.body.message).toContain("Unauthorized account type");
+            expect(res.body.message.length).toBeGreaterThan(0);
+            expect(res.status).toBe(401);
+            done();
+          });
+      });
+      test("should send an error with status 400 because of wrong format file type", (done) => {
+        request(app)
+          .post("/bands/portofolio/url")
+          .send({ fileUrl: filename.file, portofolioType: 'jpeg' })
+          .set("access_token", bandToken)
+          .end((err, res) => {
+            expect(err).toBe(null);
+            expect(typeof res.body).toEqual("object");
+            expect(res.body).toHaveProperty("message");
+            expect(res.body.message).toContain("Wrong Format File Type");
+            expect(res.body.message.length).toBeGreaterThan(0);
+            expect(res.status).toBe(400);
+            done();
+          });
+      });
+    });
+  })
 });

@@ -54,7 +54,7 @@ beforeAll((done) => {
       });
       userId = band.id;
 
-      console.log(band.id, "---------------user band");
+      // console.log(band.id, "---------------user band");
       return User.create(dataClient);
     })
     .then((client) => {
@@ -64,13 +64,13 @@ beforeAll((done) => {
         name: client.name,
         accountType: client.accountType,
       });
-      console.log(client.id, "----------------user client");
+      // console.log(client.id, "----------------user client");
       bandProfile.UserId = userId;
       clientId = client.id;
       return Band.create(bandProfile);
     })
     .then((data) => {
-      console.log(data, "------------------ data band");
+      // console.log(data, "------------------ data band");
       bandId = data.id;
       transaction.bandId = data.id;
       done();
@@ -101,6 +101,7 @@ describe("Transaction routes", () => {
         )
         .set("access_token", clientToken)
         .end((err, res) => {
+
           expect(err).toBe(null);
           expect(typeof res.body).toEqual("object");
           // expect(res.body).toHaveProperty("snapToken");
