@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx jest --coverage --watchAll --runInBand",
+    "test": "npx jest --coverage --watchAll --runInBand --env=node",
     "dev": "npx nodemon bin/http.js"
   },
   "repository": {
