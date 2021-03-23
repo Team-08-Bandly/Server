@@ -95,7 +95,7 @@ class transactionController {
 
   static getTransactionByUserId(req, res, next) {
     const UserId = req.decoded.id;
-    Transaction.findAll({ where: { UserId } })
+    Transaction.findAll({ where: { UserId }, include: [Band] })
       .then((Transactions) => {
         res.status(200).json({ Transactions });
       })
