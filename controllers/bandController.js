@@ -1,4 +1,4 @@
-const { Band, BandGenre, Genre } = require("../models");
+const { Band, BandGenre, Genre, Portofolio, Transaction } = require("../models");
 
 module.exports = class BandController {
   static findAll(req, res, next) {
@@ -13,7 +13,7 @@ module.exports = class BandController {
 
   static find(req, res, next) {
     const { id } = req.params;
-    Band.findOne({ where: { id }, include: Genre })
+    Band.findOne({ where: { id }, include: [ Genre, Portofolio, Transaction ] })
       .then((band) => {
         if (!band)
           throw {
