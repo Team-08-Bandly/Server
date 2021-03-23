@@ -22,6 +22,14 @@ module.exports = {
       name: 'dangdut',
       createdAt: new Date(),
       updatedAt: new Date()
+    },{
+      name: 'metal',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },{
+      name: 'reggae',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {});
     
   },
