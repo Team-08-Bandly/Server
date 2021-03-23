@@ -2,7 +2,7 @@ const unggah = require("unggah");
 
 const upload = unggah({
   limits: {
-    fileSize: 1e6, // in bytes
+    fileSize: 1e18, // in bytes
   },
   storage: unggah.s3({
     endpoint: "s3.ap-southeast-1.amazonaws.com",
