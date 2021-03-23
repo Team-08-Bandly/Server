@@ -38,15 +38,17 @@ class transactionController {
           },
         },
       });
-      const transaction = await Transaction.create({
+      let snapToken = snapResp.data.token;
+      await Transaction.create({
         name,
         address: location,
         BandId: bandId,
         UserId: decoded.id,
         date: new Date(date),
         duration: +duration,
+        snapToken,
+        status: "pending",
       });
-      let snapToken = snapResp.data.token;
       res.status(201).json({ snapToken });
     } catch (error) {
       next(error);
@@ -85,6 +87,17 @@ class transactionController {
     Transaction.findAll({ where: { BandId: bandId } })
       .then((transactions) => {
         res.status(200).json({ transactions });
+      })
+      .catch((err) => {
+        next(err);
+      });
+  }
+
+  static updateStatus(req, res, next) {
+    const { status, snapToken } = req.body;
+    Transaction.update({ status }, { where: { snapToken } })
+      .then((_) => {
+        res.status(200).json({ message: "Success update status" });
       })
       .catch((err) => {
         next(err);
