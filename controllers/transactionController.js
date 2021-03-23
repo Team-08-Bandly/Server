@@ -93,6 +93,17 @@ class transactionController {
       });
   }
 
+  static getTransactionByUserId(req, res, next) {
+    const UserId = req.decoded.id;
+    Transaction.findAll({ where: { UserId } })
+      .then((Transactions) => {
+        res.status(200).json({ Transactions });
+      })
+      .catch((err) => {
+        next(err);
+      });
+  }
+
   static updateStatus(req, res, next) {
     const { status, snapToken } = req.body;
     Transaction.update({ status }, { where: { snapToken } })
