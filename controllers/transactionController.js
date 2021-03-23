@@ -97,6 +97,9 @@ class transactionController {
     const UserId = req.decoded.id;
     Transaction.findAll({ where: { UserId }, include: [Band] })
       .then((Transactions) => {
+        if (Transactions.length === 0) {
+          throw { name: "customError", status: 404, message: "Data not found" };
+        }
         res.status(200).json({ Transactions });
       })
       .catch((err) => {
