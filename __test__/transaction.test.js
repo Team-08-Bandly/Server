@@ -40,7 +40,7 @@ let bandToken;
 let clientToken;
 let userId;
 let clientId;
-let portoId;
+let snapToken;
 let bandId;
 
 beforeAll((done) => {
@@ -93,11 +93,11 @@ describe("Transaction routes", () => {
       request(app)
         .get(
           "/transactions?name=ridho&location=jakarta&duration=2&date=2021-03-22&bandId=" +
-          bandId
+            bandId
         )
         .set("access_token", clientToken)
         .end((err, res) => {
-
+          snapToken = res.body.snapToken;
           expect(err).toBe(null);
           expect(typeof res.body).toEqual("object");
           expect(res.body).toHaveProperty("snapToken");
@@ -204,6 +204,85 @@ describe("GET transaction by bandId", () => {
           expect(res.body).toHaveProperty("transactions", expect.any(Array));
           expect(res.status).toBe(200);
           done();
+        });
+    });
+  });
+});
+
+describe("GET transaction by UserId in authenticate", () => {
+  describe("success get transaction with User Id", () => {
+    test("should return object with status 200", (done) => {
+      request(app)
+        .get("/transactions/user")
+        .set("access_token", clientToken)
+        .end((err, res) => {
+          if (err) {
+            done(err);
+          } else {
+            expect(err).toBe(null);
+            expect(typeof res.body).toContain("object");
+            expect(res.body).toHaveProperty("Transactions");
+            expect(res.status).toBe(200);
+            done();
+          }
+        });
+    });
+  });
+  describe("Error process", () => {
+    test("should send error because wrong access_token with status 401", (done) => {
+      request(app)
+        .get("/transactions/user")
+        .set("access_token", "123456789")
+        .end((err, res) => {
+          if (err) {
+            done(err);
+          } else {
+            expect(err).toBe(null);
+            expect(typeof res.body).toEqual("object");
+            expect(res.body).toHaveProperty("message");
+            expect(res.body.message).toContain("Invalid token");
+            expect(res.status).toBe(401);
+            done();
+          }
+        });
+    });
+    test("should send error because wrong user access_token status 404", (done) => {
+      request(app)
+        .get("/transactions/user")
+        .set("access_token", bandToken)
+        .end((err, res) => {
+          if (err) {
+            done(err);
+          } else {
+            expect(err).toBe(null);
+            expect(typeof res.body).toEqual("object");
+            expect(res.body).toHaveProperty("message");
+            expect(res.body.message).toContain("Data not found");
+            expect(res.status).toBe(404);
+            done();
+          }
+        });
+    });
+  });
+});
+
+describe("PUT transactions", () => {
+  describe("success proccess", () => {
+    test("should return object because update status with status 200", (done) => {
+      request(app)
+        .put("/transactions")
+        .send({ status: "success", snapToken })
+        .set("access_token", clientToken)
+        .end((err, res) => {
+          if (err) {
+            done(err);
+          } else {
+            expect(err).toBe(null);
+            expect(typeof res.body).toContain("object");
+            expect(res.body).toHaveProperty("message");
+            expect(res.status).toBe(200);
+            done();
+          }
         });
     });
   });
