@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    
+
     await queryInterface.bulkInsert('Bands', [
       {
         name: "Sheila on 7",
@@ -77,7 +77,7 @@ module.exports = {
         imageUrl: "https://gp1.wac.edgecastcdn.net/802892/http_public_production/albums/images/190968/original/resize:1000x1000/crop:x0y0w1000h1000/hash:1518323662/Art_Work_single_HAIL_EDAN_Alt_LOGO_.jpg?1518323662",
         coverUrl: "https://shopee.co.id/inspirasi-shopee/wp-content/uploads/2019/02/Edane_2017-edit.png",
         description: "Edane adalah band rock heavy metal asal Jakarta. Edane beranggotakan 5 orang, Eet gitar vocal, Fajar drum, Hendra gitar, Daeng bass vocal, Ervin vocal.",
-        rate: 0,
+        rate: 1500000,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -141,8 +141,8 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    
+
     await queryInterface.bulkDelete('Bands', null, {});
-    
+
   }
 };
