@@ -17,6 +17,22 @@ class ChatController {
       })
   }
 
+  static findOne(req, res, next) {
+    const { BandId } = req.params
+    const { id } = req.decoded
+    ChatRoom.findOne({ where: { UserId: id, BandId } })
+      .then(room => {
+        if (!room) {
+          res.status(200).json(false)
+        } else {
+          res.status(200).json({ room })
+        }
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
+
   static create(req, res, next) {
     const { BandId, RoomId } = req.body
     const { id } = req.decoded
@@ -24,7 +40,7 @@ class ChatController {
     Band.findByPk(BandId)
       .then(band => {
         if (!band) throw { name: "customError", status: 404, message: "Error not Found" }
-        else return ChatRoom.findOne({ where: { RoomId } })
+        else return ChatRoom.findOne({ where: { UserId: id, BandId } })
       })
       .then(roomChat => {
         if (!roomChat) return ChatRoom.create({ UserId: id, BandId, RoomId })
