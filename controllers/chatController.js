@@ -23,9 +23,9 @@ class ChatController {
     ChatRoom.findOne({ where: { UserId: id, BandId } })
       .then(room => {
         if (!room) {
-          res.status(200).json(false)
+          res.status(200).json({ status: false, UserId: id })
         } else {
-          res.status(200).json({ room })
+          res.status(200).json({ BandId, RoomId: room.RoomId, UserId: id, status: true })
         }
       })
       .catch(err => {
