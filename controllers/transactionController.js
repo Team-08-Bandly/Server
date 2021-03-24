@@ -1,6 +1,7 @@
 const axios = require("axios");
 const { Band, Transaction, User } = require("../models/");
 const nodemailer = require("../helpers/nodemailer");
+const convertRupiah = require("../helpers/convertRupiah");
 
 class transactionController {
   static reqSnap = async (req, res, next) => {
@@ -112,11 +113,13 @@ class transactionController {
     const { status, snapToken } = req.body;
     Transaction.findOne({ where: { snapToken }, include: [User, Band] })
       .then((data) => {
+        let result = data.Band.rate * data.duration;
+        let cost = convertRupiah(result);
         const payload = {
           email: data.User.email,
           nameBand: data.Band.name,
           nameUser: data.User.name,
-          payment: data.Band.rate * data.duration,
+          payment: cost,
           location: data.address,
           date: data.date,
         };
