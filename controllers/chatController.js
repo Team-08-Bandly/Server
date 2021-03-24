@@ -1,20 +1,34 @@
-const { ChatRoom, Band } = require('../models/')
+const { ChatRoom, Band, User } = require('../models/')
 
 class ChatController {
-  static find(req, res, next) {
+   static find = async(req, res, next) => {
     const { id } = req.decoded
 
-    ChatRoom.findAll({
-      where: {
-        UserId: id
+    try {
+      const user = await User.findByPk(+id);
+      let roomChat = [];
+      if(user.accountType === 'band'){
+        const band = await Band.findOne({ where : { UserId: id } });
+        console.log(band);
+        roomChat = await ChatRoom.findAll({
+          where: {
+            BandId: band.id
+          },
+          include: User
+        });
+      }else{
+        roomChat = await ChatRoom.findAll({
+          where: {
+            UserId: id
+          },
+          include: Band
+        });
       }
-    })
-      .then(roomChat => {
-        res.status(200).json({ roomChat })
-      })
-      .catch(err => {
-        next(err)
-      })
+      res.status(200).json({ roomChat })
+    } catch (error) {
+      next(error);
+    }
+      
   }
 
   static findOne(req, res, next) {
