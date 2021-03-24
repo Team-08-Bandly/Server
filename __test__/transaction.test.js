@@ -13,7 +13,7 @@ let dataBand = {
 
 let dataClient = {
   name: "client name",
-  email: "hansyahridho815@gmail.com",
+  email: "helsinkibatch08@gmail.com",
   password: "clientBand",
   accountType: "client",
 };
