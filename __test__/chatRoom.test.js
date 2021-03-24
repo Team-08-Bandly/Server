@@ -28,8 +28,8 @@ let bandProfile = {
 let chatRoom = {
   BandId: 0,
   UserId: 0,
-  RoomId: '1a2b3c4d5e',
-}
+  RoomId: "1a2b3c4d5e",
+};
 let clientToken;
 
 describe("User routes", () => {
@@ -43,7 +43,7 @@ describe("User routes", () => {
         return User.create(dataClient);
       })
       .then((client) => {
-        chatRoom.UserId = client.id
+        chatRoom.UserId = client.id;
         clientToken = generateToken(
           {
             id: client.id,
@@ -58,12 +58,12 @@ describe("User routes", () => {
           description: bandProfile.description,
           genre: bandProfile.genre,
           rate: bandProfile.rate,
-          imageUrl: './2.png',
-          coverUrl: './2.png',
-        })
+          imageUrl: "./2.png",
+          coverUrl: "./2.png",
+        });
       })
-      .then(newBand => {
-        chatRoom.BandId = newBand.id
+      .then((newBand) => {
+        chatRoom.BandId = newBand.id;
         done();
       })
       .catch((err) => {
@@ -71,7 +71,8 @@ describe("User routes", () => {
       });
   });
   afterAll((done) => {
-    queryInterface.bulkDelete("ChatRooms", {})
+    queryInterface
+      .bulkDelete("ChatRooms", {})
       .then(() => queryInterface.bulkDelete("Bands", {}))
       .then(() => queryInterface.bulkDelete("Users", {}))
       .then(() => {
@@ -92,12 +93,27 @@ describe("User routes", () => {
           .set("access_token", clientToken)
           .end((err, res) => {
             expect(err).toBe(null);
-            expect(res.status).toBe(201)
-            expect(res.body).toHaveProperty("newRoomChat", res.body.newRoomChat);
-            expect(res.body.newRoomChat).toHaveProperty("id", expect.any(Number));
-            expect(res.body.newRoomChat).toHaveProperty("UserId", chatRoom.UserId);
-            expect(res.body.newRoomChat).toHaveProperty("BandId", chatRoom.BandId);
-            expect(res.body.newRoomChat).toHaveProperty("RoomId", chatRoom.RoomId);
+            expect(res.status).toBe(201);
+            expect(res.body).toHaveProperty(
+              "newRoomChat",
+              res.body.newRoomChat
+            );
+            expect(res.body.newRoomChat).toHaveProperty(
+              "id",
+              expect.any(Number)
+            );
+            expect(res.body.newRoomChat).toHaveProperty(
+              "UserId",
+              chatRoom.UserId
+            );
+            expect(res.body.newRoomChat).toHaveProperty(
+              "BandId",
+              chatRoom.BandId
+            );
+            expect(res.body.newRoomChat).toHaveProperty(
+              "RoomId",
+              chatRoom.RoomId
+            );
             done();
           });
       });
@@ -108,13 +124,30 @@ describe("User routes", () => {
           .set("access_token", clientToken)
           .end((err, res) => {
             expect(err).toBe(null);
-            expect(res.status).toBe(200)
+            expect(res.status).toBe(200);
             expect(res.body).toHaveProperty("roomChat", res.body.roomChat);
             expect(res.body.roomChat).toHaveProperty("id", expect.any(Number));
             expect(res.body.roomChat).toHaveProperty("UserId", chatRoom.UserId);
             expect(res.body.roomChat).toHaveProperty("BandId", chatRoom.BandId);
             expect(res.body.roomChat).toHaveProperty("RoomId", chatRoom.RoomId);
             done();
+          });
+      });
+
+      test("should send chat room with params BandId status code 200", (done) => {
+        request(app)
+          .get("/chatRoom/" + chatRoom.BandId)
+          .set("access_token", clientToken)
+          .end((err, res) => {
+            if (err) {
+              done(err);
+            } else {
+              expect(err).toBe(null);
+              expect(res.status).toBe(200);
+              expect(typeof res.body).toContain("object");
+              expect(res.body).toHaveProperty("room");
+              done();
+            }
           });
       });
     });
@@ -149,8 +182,8 @@ describe("User routes", () => {
             done();
           });
       });
-    })
-  })
+    });
+  });
 
   //get
   describe("GET /chatRoom", () => {
@@ -162,16 +195,28 @@ describe("User routes", () => {
           .set("access_token", clientToken)
           .end((err, res) => {
             expect(err).toBe(null);
-            expect(res.status).toBe(200)
+            expect(res.status).toBe(200);
             expect(res.body).toHaveProperty("roomChat", res.body.roomChat);
-            expect(res.body.roomChat[0]).toHaveProperty("id", expect.any(Number));
-            expect(res.body.roomChat[0]).toHaveProperty("UserId", chatRoom.UserId);
-            expect(res.body.roomChat[0]).toHaveProperty("BandId", chatRoom.BandId);
-            expect(res.body.roomChat[0]).toHaveProperty("RoomId", chatRoom.RoomId);
+            expect(res.body.roomChat[0]).toHaveProperty(
+              "id",
+              expect.any(Number)
+            );
+            expect(res.body.roomChat[0]).toHaveProperty(
+              "UserId",
+              chatRoom.UserId
+            );
+            expect(res.body.roomChat[0]).toHaveProperty(
+              "BandId",
+              chatRoom.BandId
+            );
+            expect(res.body.roomChat[0]).toHaveProperty(
+              "RoomId",
+              chatRoom.RoomId
+            );
             done();
           });
       });
-    })
+    });
     describe("Error process", () => {
       test("should send an error with status 401 because of access_token is not included", (done) => {
         request(app)
@@ -185,6 +230,6 @@ describe("User routes", () => {
             done();
           });
       });
-    })
-  })
-})
+    });
+  });
+});
