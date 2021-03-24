@@ -31,11 +31,14 @@ let chatRoom = {
   RoomId: "1a2b3c4d5e",
 };
 let clientToken;
+let bandToken;
+let userId;
 
 describe("User routes", () => {
   beforeAll((done) => {
     User.create(dataBand)
       .then((band) => {
+        userId = band.id;
         bandToken = generateToken(
           { id: band.id, email: band.email, accountType: band.accountType },
           "BandlySecret"
@@ -60,9 +63,11 @@ describe("User routes", () => {
           rate: bandProfile.rate,
           imageUrl: "./2.png",
           coverUrl: "./2.png",
+          UserId: userId,
         });
       })
       .then((newBand) => {
+        // console.log(newBand, "before-----------------------");
         chatRoom.BandId = newBand.id;
         done();
       })
@@ -215,6 +220,33 @@ describe("User routes", () => {
             done();
           });
       });
+      test("should send chat room with status code 200", (done) => {
+        request(app)
+          .get("/chatRoom")
+          .set("access_token", bandToken)
+          .end((err, res) => {
+            expect(err).toBe(null);
+            expect(res.status).toBe(200);
+            expect(res.body).toHaveProperty("roomChat", res.body.roomChat);
+            expect(res.body.roomChat[0]).toHaveProperty(
+              "id",
+              expect.any(Number)
+            );
+            expect(res.body.roomChat[0]).toHaveProperty(
+              "UserId",
+              chatRoom.UserId
+            );
+            expect(res.body.roomChat[0]).toHaveProperty(
+              "BandId",
+              chatRoom.BandId
+            );
+            expect(res.body.roomChat[0]).toHaveProperty(
+              "RoomId",
+              chatRoom.RoomId
+            );
+            done();
+          });
+      });
     });
     describe("Error process", () => {
       test("should send an error with status 401 because of access_token is not included", (done) => {
@@ -227,6 +259,26 @@ describe("User routes", () => {
             expect(res.body.message.length).toBeGreaterThan(0);
             expect(res.status).toBe(401);
             done();
+          });
+      });
+      test("should send error with status 404 because not found chat room", (done) => {
+        request(app)
+          .get("/chatRoom")
+          .set(
+            "access_token",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkhhbnN5YWgiLCJlbWFpbCI6InJpZGhvY2xpZW50QG1haWwuY29tIiwiYWNjb3VudFR5cGUiOiJjbGllbnQiLCJpYXQiOjE2MTY0ODczMzN9.yfkvDDTQeLl7I8TerhVTwWdPhbgVmEKbuWi6JTlpLzA"
+          )
+          .end((err, res) => {
+            if (err) {
+              done(err);
+            } else {
+              expect(err).toBe(null);
+              expect(res.body).toHaveProperty("message");
+              expect(res.body.message).toContain("Room not found");
+              expect(res.body.message.length).toBeGreaterThan(0);
+              expect(res.status).toBe(404);
+              done();
+            }
           });
       });
     });
