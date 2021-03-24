@@ -129,7 +129,7 @@ module.exports = {
         name: "Shaggydog",
         UserId: 12,
         location: "Yogyakarta",
-        imageUrl: "https://lh3.googleusercontent.com/proxy/8rX75Ov7CANPMgFaxstW-_eSeMirB59K14oFI_v4QbUjNVzavxxb5D2ke0iTJCrySpb2yHVjqR49ZfveWLARCA1n-5BsKqWPoduQ1PBXbIL3H2Kjp3bt4sc",
+        imageUrl: "https://pbs.twimg.com/profile_images/1249990291269943297/SMsmR2tQ_400x400.jpg",
         coverUrl: "https://siasatpartikelir.com/wp-content/uploads/2021/02/Shaggydog-dan-Wok-The-Rock-2-scaled.jpg",
         description: "Shaggydog adalah band bergenre reggae pop jazz rock asal Yogyakarta. Shaggy dog beranggotakan Heru vocal, Richard gitar, Raymond gitar, Bandizt bass, Lilik keyboard, Yoyo drum",
         rate: 10000000,
