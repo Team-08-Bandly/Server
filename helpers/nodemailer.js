@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-
+const convertRupiah = require("./convertRupiah");
 function server(obj) {
   //Step 1
   let transporter = nodemailer.createTransport({
@@ -10,12 +10,16 @@ function server(obj) {
     },
   });
 
+  const { email, nameUser, nameBand, payment, location, date } = obj;
+  let total = convertRupiah(payment);
   //Step 2
   let mailOptions = {
-    from: "helsinkibatch08@gmail.com",
-    to: `${obj.email}`,
-    subject: "Registrasi Berhasil",
-    text: `Selamat, anda telah berhail registrasi di website Camera Memory dengan email: ${obj.email}`,
+    from: process.env.EMAIL,
+    to: `${email}`,
+    subject: "Pemesanan Berhasil",
+    text: `Selamat ${nameUser}, anda telah berhail melakukan pemesanan kepada Band ${nameBand} dengan lokasi: ${location} pada di tanggal: ${date.getDate()}-${
+      date.getMonth() + 1
+    }-${date.getFullYear()} dengan total biaya ${total}`,
   };
 
   transporter.verify(function (error, success) {
