@@ -1,5 +1,6 @@
 const axios = require("axios");
-const { Band, Transaction } = require("../models/");
+const { Band, Transaction, User } = require("../models/");
+const nodemailer = require("../helpers/nodemailer");
 
 class transactionController {
   static reqSnap = async (req, res, next) => {
@@ -109,7 +110,19 @@ class transactionController {
 
   static updateStatus(req, res, next) {
     const { status, snapToken } = req.body;
-    Transaction.update({ status }, { where: { snapToken } })
+    Transaction.findOne({ where: { snapToken }, include: [User, Band] })
+      .then((data) => {
+        const payload = {
+          email: data.User.email,
+          nameBand: data.Band.name,
+          nameUser: data.User.name,
+          payment: data.Band.rate * data.duration,
+          location: data.address,
+          date: data.date,
+        };
+        nodemailer(payload);
+        return Transaction.update({ status }, { where: { snapToken } });
+      })
       .then((_) => {
         res.status(200).json({ message: "Success update status" });
       })
