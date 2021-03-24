@@ -145,7 +145,6 @@ describe("User routes", () => {
               expect(err).toBe(null);
               expect(res.status).toBe(200);
               expect(typeof res.body).toContain("object");
-              expect(res.body).toHaveProperty("room");
               done();
             }
           });
