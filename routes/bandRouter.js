@@ -7,7 +7,7 @@ const portofolio = require("./portofolioRouter");
 
 router.get("/", BandController.findAll);
 router.use("/portofolio", portofolio);
-router.get("/myProfile",authenticate, BandController.getMyBandProfile);
+router.get("/myProfile", authenticate, BandController.getMyBandProfile);
 
 router.get("/:id", BandController.find);
 router.use(authenticate);
